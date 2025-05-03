@@ -1,93 +1,31 @@
 import { Request, Response } from "express";
-import { product_service } from "./product_service";
-import { sendResponse } from "../../utils/sendResponse";
 import { HttpStatus } from "../../DefaultConfig/config";
 import { UnlinkFiles } from "../../middleware/fileUploader";
+import { sendResponse } from "../../utils/sendResponse";
+import { product_service } from "./product_service";
 
 const create = async function (req: Request, res: Response) {
-  const { deleted_images, retained_images, coupon_code, ...data } = req.body;
 
-  if (coupon_code !== "undefined" && coupon_code) {
-    data.coupon = {
-      available: true,
-      coupon_code: coupon_code,
-    };
-  }
-  const img =
-    (!Array.isArray(req.files) &&
-      req.files?.img &&
-      req.files.img.length > 0 &&
-      req.files.img?.map((doc: any) => doc.path)) ||
-    null;
+  req.body.user = req?.user?._id?.toString();
 
-  if (img && img?.length > 0) data.img = img;
-
-  data.user = req?.user?._id;
-
-  const result = await product_service.create(data);
+  const result = await product_service.create(req.body);
 
   sendResponse(res, HttpStatus.SUCCESS, result);
 };
 
 const get_all = async function (req: Request, res: Response) {
-  const { search, popular, featured, order, sub_category, ...other_fields } =
+  const { search, order, ...other_fields } =
     req.query;
-
-  const populatePath = ["category", "subCategory", "user"];
-  const selectFields = ["_id name", "_id name", "_id"];
 
   let searchKeys = {} as { name: string };
 
   let queryKeys = { ...other_fields };
 
   if (search) searchKeys.name = search as string;
-  let result;
-  if (popular) {
-    result = await product_service.get_all(
-      { sort: "stock", limit: "12", page: "1" },
-      searchKeys,
-      populatePath,
-      selectFields,
-      "_id name price discount img",
-    );
-  } else if (featured) {
-    result = await product_service.get_all(
-      { isFeatured: true, limit: "25", page: "1" },
-      searchKeys,
-      populatePath,
-      selectFields,
-      "_id name price discount img",
-    );
-  } else if (order && typeof order === "string") {
-    const _ids = order.split(",").map((order_id) => order_id.trim());
-
-    const product_ids = { _id: { $in: _ids } };
-
-    result = await product_service.get_all(
-      { ...product_ids },
-      searchKeys,
-      populatePath,
-      selectFields,
-      "_id name price discount img",
-    );
-  } else {
-    if (sub_category && typeof sub_category === "string") {
-      const sub_category_array = sub_category
-        .split(",")
-        .map((sub_category) => ({
-          subCategory: sub_category,
-        }));
-
-      queryKeys.$or = sub_category_array;
-    }
-    result = await product_service.get_all(
-      queryKeys,
-      searchKeys,
-      populatePath,
-      selectFields,
-      "_id name price discount img",
-    );
-  }
+  const result = await product_service.get_all(
+    queryKeys,
+    searchKeys,
+  );
   sendResponse(res, HttpStatus.SUCCESS, result);
 };
 

@@ -1,14 +1,19 @@
 import express from "express";
-import asyncWrapper from "../../middleware/asyncWrapper";
-import verifyToken from "../../middleware/verifyToken";
 import config from "../../DefaultConfig/config";
+import asyncWrapper from "../../middleware/asyncWrapper";
+import uploadFile from '../../middleware/fileUploader';
+import validateRequest from '../../middleware/validateRequest';
+import verifyToken from "../../middleware/verifyToken";
 import { product_controller } from "./product_controller";
+import { product_validate } from './product_validate';
 
 export const product_router = express.Router();
 
 product_router
   .post(
     "/product/create",
+    uploadFile(),
+    validateRequest(product_validate.create_validate),
     verifyToken(config.VENDOR),
     asyncWrapper(product_controller.create),
   )

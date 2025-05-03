@@ -22541,3 +22541,178 @@ src/apis/city/city_controller.ts(62,14): error TS1005: ';' expected.
     at Module.load (node:internal/modules/cjs/loader:1469:32)
     at Function._load (node:internal/modules/cjs/loader:1286:12)
     at TracingChannel.traceSync (node:diagnostics_channel:322:14)
+2025-05-03 11:38:41 [ERROR]: Error: ⨯ Unable to compile TypeScript:
+src/utils/Aggregator.ts(85,7): error TS1005: ',' expected.
+
+    at Object.<anonymous> (D:\backend\ely_backend\src\utils\Aggregator.ts:1:7)
+    at Module.<anonymous> (node:internal/modules/cjs/loader:1734:14)
+    at Module._compile (D:\backend\ely_backend\node_modules\source-map-support\source-map-support.js:568:25)
+    at Module.m._compile (C:\Users\BDCALL~1\AppData\Local\Temp\ts-node-dev-hook-12044750967901918.js:69:33)
+    at loadTS (node:internal/modules/cjs/loader:1826:10)
+    at require.extensions.<computed> (C:\Users\BDCALL~1\AppData\Local\Temp\ts-node-dev-hook-12044750967901918.js:71:20)
+    at Object.nodeDevHook [as .ts] (D:\backend\ely_backend\node_modules\ts-node-dev\lib\hook.js:63:13)
+    at Module.load (node:internal/modules/cjs/loader:1469:32)
+    at Function._load (node:internal/modules/cjs/loader:1286:12)
+    at TracingChannel.traceSync (node:diagnostics_channel:322:14)
+2025-05-03 11:39:50 [ERROR]: Error: ⨯ Unable to compile TypeScript:
+src/utils/Aggregator.ts(101,7): error TS1005: '=>' expected.
+src/utils/Aggregator.ts(101,17): error TS1005: ',' expected.
+src/utils/Aggregator.ts(101,19): error TS1136: Property assignment expected.
+src/utils/Aggregator.ts(105,19): error TS1005: ';' expected.
+src/utils/Aggregator.ts(106,7): error TS1109: Expression expected.
+src/utils/Aggregator.ts(106,8): error TS1128: Declaration or statement expected.
+src/utils/Aggregator.ts(107,4): error TS1472: 'catch' or 'finally' expected.
+src/utils/Aggregator.ts(108,3): error TS1005: ',' expected.
+src/utils/Aggregator.ts(113,1): error TS1128: Declaration or statement expected.
+
+    at Object.<anonymous> (D:\backend\ely_backend\src\utils\Aggregator.ts:1:7)
+    at Module.<anonymous> (node:internal/modules/cjs/loader:1734:14)
+    at Module._compile (D:\backend\ely_backend\node_modules\source-map-support\source-map-support.js:568:25)
+    at Module.m._compile (C:\Users\BDCALL~1\AppData\Local\Temp\ts-node-dev-hook-12044750967901918.js:69:33)
+    at loadTS (node:internal/modules/cjs/loader:1826:10)
+    at require.extensions.<computed> (C:\Users\BDCALL~1\AppData\Local\Temp\ts-node-dev-hook-12044750967901918.js:71:20)
+    at Object.nodeDevHook [as .ts] (D:\backend\ely_backend\node_modules\ts-node-dev\lib\hook.js:63:13)
+    at Module.load (node:internal/modules/cjs/loader:1469:32)
+    at Function._load (node:internal/modules/cjs/loader:1286:12)
+    at TracingChannel.traceSync (node:diagnostics_channel:322:14)
+2025-05-03 11:39:53 [ERROR]: Error: ⨯ Unable to compile TypeScript:
+src/utils/Aggregator.ts(101,7): error TS1005: '=>' expected.
+src/utils/Aggregator.ts(101,17): error TS1005: ',' expected.
+src/utils/Aggregator.ts(101,19): error TS1136: Property assignment expected.
+src/utils/Aggregator.ts(105,19): error TS1005: ';' expected.
+src/utils/Aggregator.ts(106,7): error TS1109: Expression expected.
+src/utils/Aggregator.ts(106,8): error TS1128: Declaration or statement expected.
+src/utils/Aggregator.ts(107,4): error TS1472: 'catch' or 'finally' expected.
+src/utils/Aggregator.ts(108,3): error TS1005: ',' expected.
+src/utils/Aggregator.ts(113,1): error TS1128: Declaration or statement expected.
+
+    at Object.<anonymous> (D:\backend\ely_backend\src\utils\Aggregator.ts:1:7)
+    at Module.<anonymous> (node:internal/modules/cjs/loader:1734:14)
+    at Module._compile (D:\backend\ely_backend\node_modules\source-map-support\source-map-support.js:568:25)
+    at Module.m._compile (C:\Users\BDCALL~1\AppData\Local\Temp\ts-node-dev-hook-12044750967901918.js:69:33)
+    at loadTS (node:internal/modules/cjs/loader:1826:10)
+    at require.extensions.<computed> (C:\Users\BDCALL~1\AppData\Local\Temp\ts-node-dev-hook-12044750967901918.js:71:20)
+    at Object.nodeDevHook [as .ts] (D:\backend\ely_backend\node_modules\ts-node-dev\lib\hook.js:63:13)
+    at Module.load (node:internal/modules/cjs/loader:1469:32)
+    at Function._load (node:internal/modules/cjs/loader:1286:12)
+    at TracingChannel.traceSync (node:diagnostics_channel:322:14)
+2025-05-03 12:56:38 [ERROR]: Error: ⨯ Unable to compile TypeScript:
+src/apis/Product/product_model.ts(38,15): error TS1005: ',' expected.
+src/apis/Product/product_model.ts(38,18): error TS1002: Unterminated string literal.
+src/apis/Product/product_model.ts(39,5): error TS1005: ':' expected.
+
+    at Object.<anonymous> (D:\backend\ely_backend\src\apis\Product\product_model.ts:1:7)
+    at Module.<anonymous> (node:internal/modules/cjs/loader:1734:14)
+    at Module._compile (D:\backend\ely_backend\node_modules\source-map-support\source-map-support.js:568:25)
+    at Module.m._compile (C:\Users\BDCALL~1\AppData\Local\Temp\ts-node-dev-hook-12044750967901918.js:69:33)
+    at loadTS (node:internal/modules/cjs/loader:1826:10)
+    at require.extensions.<computed> (C:\Users\BDCALL~1\AppData\Local\Temp\ts-node-dev-hook-12044750967901918.js:71:20)
+    at Object.nodeDevHook [as .ts] (D:\backend\ely_backend\node_modules\ts-node-dev\lib\hook.js:63:13)
+    at Module.load (node:internal/modules/cjs/loader:1469:32)
+    at Function._load (node:internal/modules/cjs/loader:1286:12)
+    at TracingChannel.traceSync (node:diagnostics_channel:322:14)
+2025-05-03 14:21:47 [ERROR]: Error: ⨯ Unable to compile TypeScript:
+src/apis/Product/product_route.ts(15,5): error TS1005: ',' expected.
+
+    at Object.<anonymous> (D:\backend\ely_backend\src\apis\Product\product_route.ts:1:7)
+    at Module.<anonymous> (node:internal/modules/cjs/loader:1734:14)
+    at Module._compile (D:\backend\ely_backend\node_modules\source-map-support\source-map-support.js:568:25)
+    at Module.m._compile (C:\Users\BDCALL~1\AppData\Local\Temp\ts-node-dev-hook-12044750967901918.js:69:33)
+    at loadTS (node:internal/modules/cjs/loader:1826:10)
+    at require.extensions.<computed> (C:\Users\BDCALL~1\AppData\Local\Temp\ts-node-dev-hook-12044750967901918.js:71:20)
+    at Object.nodeDevHook [as .ts] (D:\backend\ely_backend\node_modules\ts-node-dev\lib\hook.js:63:13)
+    at Module.load (node:internal/modules/cjs/loader:1469:32)
+    at Function._load (node:internal/modules/cjs/loader:1286:12)
+    at TracingChannel.traceSync (node:diagnostics_channel:322:14)
+2025-05-03 14:40:59 [ERROR]: Error: ⨯ Unable to compile TypeScript:
+src/apis/Product/product_route.ts(16,5): error TS1005: ',' expected.
+
+    at Object.<anonymous> (D:\backend\ely_backend\src\apis\Product\product_route.ts:1:7)
+    at Module.<anonymous> (node:internal/modules/cjs/loader:1734:14)
+    at Module._compile (D:\backend\ely_backend\node_modules\source-map-support\source-map-support.js:568:25)
+    at Module.m._compile (C:\Users\BDCALL~1\AppData\Local\Temp\ts-node-dev-hook-12044750967901918.js:69:33)
+    at loadTS (node:internal/modules/cjs/loader:1826:10)
+    at require.extensions.<computed> (C:\Users\BDCALL~1\AppData\Local\Temp\ts-node-dev-hook-12044750967901918.js:71:20)
+    at Object.nodeDevHook [as .ts] (D:\backend\ely_backend\node_modules\ts-node-dev\lib\hook.js:63:13)
+    at Module.load (node:internal/modules/cjs/loader:1469:32)
+    at Function._load (node:internal/modules/cjs/loader:1286:12)
+    at TracingChannel.traceSync (node:diagnostics_channel:322:14)
+2025-05-03 15:06:00 [ERROR]: Error: ⨯ Unable to compile TypeScript:
+src/apis/Product/product_controller.ts(17,18): error TS1005: ',' expected.
+
+    at Object.<anonymous> (D:\backend\ely_backend\src\apis\Product\product_controller.ts:1:7)
+    at Module.<anonymous> (node:internal/modules/cjs/loader:1734:14)
+    at Module._compile (D:\backend\ely_backend\node_modules\source-map-support\source-map-support.js:568:25)
+    at Module.m._compile (C:\Users\BDCALL~1\AppData\Local\Temp\ts-node-dev-hook-12044750967901918.js:69:33)
+    at loadTS (node:internal/modules/cjs/loader:1826:10)
+    at require.extensions.<computed> (C:\Users\BDCALL~1\AppData\Local\Temp\ts-node-dev-hook-12044750967901918.js:71:20)
+    at Object.nodeDevHook [as .ts] (D:\backend\ely_backend\node_modules\ts-node-dev\lib\hook.js:63:13)
+    at Module.load (node:internal/modules/cjs/loader:1469:32)
+    at Function._load (node:internal/modules/cjs/loader:1286:12)
+    at TracingChannel.traceSync (node:diagnostics_channel:322:14)
+2025-05-03 15:30:11 [ERROR]: Error: ⨯ Unable to compile TypeScript:
+src/apis/Product/product_service.ts(46,25): error TS1005: ',' expected.
+src/apis/Product/product_service.ts(47,9): error TS1005: ',' expected.
+src/apis/Product/product_service.ts(48,7): error TS1128: Declaration or statement expected.
+src/apis/Product/product_service.ts(49,5): error TS1128: Declaration or statement expected.
+src/apis/Product/product_service.ts(49,6): error TS1128: Declaration or statement expected.
+src/apis/Product/product_service.ts(50,3): error TS1128: Declaration or statement expected.
+src/apis/Product/product_service.ts(51,1): error TS1128: Declaration or statement expected.
+
+    at Object.<anonymous> (D:\backend\ely_backend\src\apis\Product\product_service.ts:1:7)
+    at Module.<anonymous> (node:internal/modules/cjs/loader:1734:14)
+    at Module._compile (D:\backend\ely_backend\node_modules\source-map-support\source-map-support.js:568:25)
+    at Module.m._compile (C:\Users\BDCALL~1\AppData\Local\Temp\ts-node-dev-hook-12044750967901918.js:69:33)
+    at loadTS (node:internal/modules/cjs/loader:1826:10)
+    at require.extensions.<computed> (C:\Users\BDCALL~1\AppData\Local\Temp\ts-node-dev-hook-12044750967901918.js:71:20)
+    at Object.nodeDevHook [as .ts] (D:\backend\ely_backend\node_modules\ts-node-dev\lib\hook.js:63:13)
+    at Module.load (node:internal/modules/cjs/loader:1469:32)
+    at Function._load (node:internal/modules/cjs/loader:1286:12)
+    at TracingChannel.traceSync (node:diagnostics_channel:322:14)
+2025-05-03 15:31:15 [ERROR]: Error: ⨯ Unable to compile TypeScript:
+src/apis/Product/product_service.ts(46,38): error TS1136: Property assignment expected.
+src/apis/Product/product_service.ts(46,78): error TS1005: ',' expected.
+src/apis/Product/product_service.ts(46,79): error TS1128: Declaration or statement expected.
+src/apis/Product/product_service.ts(47,9): error TS1128: Declaration or statement expected.
+src/apis/Product/product_service.ts(48,7): error TS1128: Declaration or statement expected.
+src/apis/Product/product_service.ts(49,5): error TS1128: Declaration or statement expected.
+src/apis/Product/product_service.ts(49,6): error TS1128: Declaration or statement expected.
+src/apis/Product/product_service.ts(50,3): error TS1128: Declaration or statement expected.
+src/apis/Product/product_service.ts(51,1): error TS1128: Declaration or statement expected.
+
+    at Object.<anonymous> (D:\backend\ely_backend\src\apis\Product\product_service.ts:1:7)
+    at Module.<anonymous> (node:internal/modules/cjs/loader:1734:14)
+    at Module._compile (D:\backend\ely_backend\node_modules\source-map-support\source-map-support.js:568:25)
+    at Module.m._compile (C:\Users\BDCALL~1\AppData\Local\Temp\ts-node-dev-hook-12044750967901918.js:69:33)
+    at loadTS (node:internal/modules/cjs/loader:1826:10)
+    at require.extensions.<computed> (C:\Users\BDCALL~1\AppData\Local\Temp\ts-node-dev-hook-12044750967901918.js:71:20)
+    at Object.nodeDevHook [as .ts] (D:\backend\ely_backend\node_modules\ts-node-dev\lib\hook.js:63:13)
+    at Module.load (node:internal/modules/cjs/loader:1469:32)
+    at Function._load (node:internal/modules/cjs/loader:1286:12)
+    at TracingChannel.traceSync (node:diagnostics_channel:322:14)
+2025-05-03 16:32:55 [ERROR]: Error: ⨯ Unable to compile TypeScript:
+src/apis/Product/product_service.ts(93,9): error TS1005: ',' expected.
+
+    at Object.<anonymous> (D:\backend\ely_backend\src\apis\Product\product_service.ts:1:7)
+    at Module.<anonymous> (node:internal/modules/cjs/loader:1734:14)
+    at Module._compile (D:\backend\ely_backend\node_modules\source-map-support\source-map-support.js:568:25)
+    at Module.m._compile (C:\Users\BDCALL~1\AppData\Local\Temp\ts-node-dev-hook-12044750967901918.js:69:33)
+    at loadTS (node:internal/modules/cjs/loader:1826:10)
+    at require.extensions.<computed> (C:\Users\BDCALL~1\AppData\Local\Temp\ts-node-dev-hook-12044750967901918.js:71:20)
+    at Object.nodeDevHook [as .ts] (D:\backend\ely_backend\node_modules\ts-node-dev\lib\hook.js:63:13)
+    at Module.load (node:internal/modules/cjs/loader:1469:32)
+    at Function._load (node:internal/modules/cjs/loader:1286:12)
+    at TracingChannel.traceSync (node:diagnostics_channel:322:14)
+2025-05-03 16:33:09 [ERROR]: Error: ⨯ Unable to compile TypeScript:
+src/apis/Product/product_service.ts(93,9): error TS1005: ',' expected.
+
+    at Object.<anonymous> (D:\backend\ely_backend\src\apis\Product\product_service.ts:1:7)
+    at Module.<anonymous> (node:internal/modules/cjs/loader:1734:14)
+    at Module._compile (D:\backend\ely_backend\node_modules\source-map-support\source-map-support.js:568:25)
+    at Module.m._compile (C:\Users\BDCALL~1\AppData\Local\Temp\ts-node-dev-hook-12044750967901918.js:69:33)
+    at loadTS (node:internal/modules/cjs/loader:1826:10)
+    at require.extensions.<computed> (C:\Users\BDCALL~1\AppData\Local\Temp\ts-node-dev-hook-12044750967901918.js:71:20)
+    at Object.nodeDevHook [as .ts] (D:\backend\ely_backend\node_modules\ts-node-dev\lib\hook.js:63:13)
+    at Module.load (node:internal/modules/cjs/loader:1469:32)
+    at Function._load (node:internal/modules/cjs/loader:1286:12)
+    at TracingChannel.traceSync (node:diagnostics_channel:322:14)

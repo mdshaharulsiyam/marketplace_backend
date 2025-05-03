@@ -12,6 +12,7 @@ import { faq_router } from "../apis/faq/faq_route";
 import { notification_router } from "../apis/Notifications/notification_route";
 import { order_router } from "../apis/Order/order_route";
 import { overview_router } from "../apis/Overview/overview_route";
+import { package_router } from '../apis/package/package_route';
 import { payment_route } from "../apis/Payment/payment_route";
 import { product_router } from "../apis/Product/product_route";
 import { review_router } from "../apis/Review/review_route";
@@ -61,4 +62,5 @@ export const routeMiddleware = (app: Express) => {
   app.use(faq_router);
   app.use(division_router);
   app.use(city_router);
+  app.use(package_router);
 };

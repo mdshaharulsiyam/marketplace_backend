@@ -81,8 +81,7 @@ const Aggregator = async <T>(
       ...aggregationPipeline,
       ...(Object.entries(sortStage)?.length > 0 ? [{ $sort: sortStage }] : []),
       ...(matchStagePosition === "start" ? [] : [{ $match: matchStage }]),
-      { $skip: (currentPage - 1) * itemsPerPage },
-      { $limit: itemsPerPage },
+      ...(page ? [{ $skip: (currentPage - 1) * itemsPerPage }, { $limit: itemsPerPage },] : [])
     ];
 
     // if (modelSelect) {
@@ -98,12 +97,15 @@ const Aggregator = async <T>(
     return {
       success: true,
       data: result,
-      pagination: {
-        currentPage,
-        itemsPerPage,
-        totalItems,
-        totalPages: Math.ceil(totalItems / itemsPerPage),
-      },
+      ...(page ? {
+        pagination: {
+          currentPage,
+          itemsPerPage,
+          totalItems,
+          totalPages: Math.ceil(totalItems / itemsPerPage),
+        },
+      } : {})
+
     };
   } catch (error: any) {
     throw new Error(
