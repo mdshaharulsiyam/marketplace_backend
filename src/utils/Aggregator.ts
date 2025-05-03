@@ -42,7 +42,6 @@ const Aggregator = async <T>(
     const currentPage = parseInt(page || "1", 10);
 
     let matchStage: any = {};
-
     // Handle search queries
     if (Object.keys(searchKeys).length > 0) {
       matchStage.$or = Object.keys(searchKeys)
@@ -81,7 +80,12 @@ const Aggregator = async <T>(
       ...aggregationPipeline,
       ...(Object.entries(sortStage)?.length > 0 ? [{ $sort: sortStage }] : []),
       ...(matchStagePosition === "start" ? [] : [{ $match: matchStage }]),
-      ...(page ? [{ $skip: (currentPage - 1) * itemsPerPage }, { $limit: itemsPerPage },] : [])
+      ...(page
+        ? [
+            { $skip: (currentPage - 1) * itemsPerPage },
+            { $limit: itemsPerPage },
+          ]
+        : []),
     ];
 
     // if (modelSelect) {
@@ -97,15 +101,16 @@ const Aggregator = async <T>(
     return {
       success: true,
       data: result,
-      ...(page ? {
-        pagination: {
-          currentPage,
-          itemsPerPage,
-          totalItems,
-          totalPages: Math.ceil(totalItems / itemsPerPage),
-        },
-      } : {})
-
+      ...(page
+        ? {
+            pagination: {
+              currentPage,
+              itemsPerPage,
+              totalItems,
+              totalPages: Math.ceil(totalItems / itemsPerPage),
+            },
+          }
+        : {}),
     };
   } catch (error: any) {
     throw new Error(

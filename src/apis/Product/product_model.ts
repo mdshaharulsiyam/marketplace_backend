@@ -34,13 +34,13 @@ const product_schema = new Schema<IProduct>(
     condition: {
       type: String,
       enum: ["USED", "NEW"],
-      required: [true, "product condition is required"]
+      required: [true, "product condition is required"],
     },
     status: {
       type: String,
       enum: ["ARCHIVED", "ACTIVE", "SOLD", "APPROVED", "PENDING"],
-      default: "PENDING"
-    }
+      default: "PENDING",
+    },
   },
   { timestamps: true },
 );

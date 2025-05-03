@@ -19,7 +19,10 @@ category_router
   )
 
   .get("/category/get-all", asyncWrapper(category_controller.get_all))
-  .get("/category/get-category-services", asyncWrapper(category_controller.get_category_services))
+  .get(
+    "/category/get-category-services",
+    asyncWrapper(category_controller.get_category_services),
+  )
 
   .patch(
     "/category/update/:id",

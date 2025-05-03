@@ -1,6 +1,6 @@
-import mongoose from 'mongoose';
+import mongoose from "mongoose";
 import { UnlinkFiles } from "../../middleware/fileUploader";
-import Aggregator from '../../utils/Aggregator';
+import Aggregator from "../../utils/Aggregator";
 import { QueryKeys, SearchKeys } from "../../utils/Queries";
 import { business_model } from "../Business/business_model";
 import { product_model } from "./product_model";
@@ -11,7 +11,6 @@ import IProduct from "./product_type";
 //     coupon_code: string
 // }
 const create = async (body: IProduct) => {
-
   await product_model.create(body);
 
   return {
@@ -20,10 +19,7 @@ const create = async (body: IProduct) => {
   };
 };
 
-const get_all = async (
-  queryKeys: QueryKeys,
-  searchKeys: SearchKeys,
-) => {
+const get_all = async (queryKeys: QueryKeys, searchKeys: SearchKeys) => {
   return await Aggregator(
     product_model,
     queryKeys,
@@ -34,8 +30,8 @@ const get_all = async (
           from: "categories",
           foreignField: "_id",
           localField: "category",
-          as: "category"
-        }
+          as: "category",
+        },
       },
       {
         $project: {
@@ -44,10 +40,13 @@ const get_all = async (
           price: 1,
           img: { $arrayElemAt: ["$img", 0] },
           condition: 1,
-          category_name: { $ifNull: [{ $arrayElemAt: ["$category.name", 0] }, null] }
-        }
-      }
-    ], "start"
+          category_name: {
+            $ifNull: [{ $arrayElemAt: ["$category.name", 0] }, null],
+          },
+        },
+      },
+    ],
+    "start",
   );
 };
 
@@ -55,32 +54,32 @@ const get_details = async (id: string) => {
   const product: any = await product_model.aggregate([
     {
       $match: {
-        _id: new mongoose.Types.ObjectId(id)
-      }
+        _id: new mongoose.Types.ObjectId(id),
+      },
     },
     {
       $lookup: {
         from: "categories",
         foreignField: "_id",
         localField: "category",
-        as: "category"
-      }
+        as: "category",
+      },
     },
     {
       $lookup: {
         from: "auths",
         foreignField: "_id",
         localField: "user",
-        as: "user"
-      }
+        as: "user",
+      },
     },
     {
       $lookup: {
         from: "services",
         foreignField: "_id",
         localField: "sub_category",
-        as: "sub_category"
-      }
+        as: "sub_category",
+      },
     },
     {
       $project: {
@@ -90,39 +89,40 @@ const get_details = async (id: string) => {
         description: 1,
         img: 1,
         condition: 1,
-        category_name: { $ifNull: [{ $arrayElemAt: ["$category.name", 0] }, null] },
-        category_id: { $ifNull: [{ $arrayElemAt: ["$category._id", 0] }, null] },
-        sub_category_name: { $ifNull: [{ $arrayElemAt: ["$sub_category.name", 0] }, null] },
+        category_name: {
+          $ifNull: [{ $arrayElemAt: ["$category.name", 0] }, null],
+        },
+        category_id: {
+          $ifNull: [{ $arrayElemAt: ["$category._id", 0] }, null],
+        },
+        sub_category_name: {
+          $ifNull: [{ $arrayElemAt: ["$sub_category.name", 0] }, null],
+        },
         user_name: { $ifNull: [{ $arrayElemAt: ["$user.name", 0] }, null] },
         user_email: { $ifNull: [{ $arrayElemAt: ["$user.email", 0] }, null] },
         user_phone: { $ifNull: [{ $arrayElemAt: ["$user.phone", 0] }, null] },
         user_img: { $ifNull: [{ $arrayElemAt: ["$user.img", 0] }, null] },
         user_id: { $ifNull: [{ $arrayElemAt: ["$user._id ", 0] }, null] },
-      }
-    }
-  ])
-  const related_product = await product_model.find({
-    category: product[0]?.category_id?.toString(),
-    _id: { $ne: id }
-  }).skip(0).limit(8)
-  // .findById(id)
-  // .populate("category sub_category user");
+      },
+    },
+  ]);
+  const related_product = await product_model
+    .find({
+      category: product[0]?.category_id?.toString(),
+      _id: { $ne: id },
+    })
+    .skip(0)
+    .limit(8);
   return {
     success: true,
     message: "product data retrieved successfully",
     data: product?.[0],
-    related_product: related_product ? related_product : []
+    related_product: related_product ? related_product : [],
   };
 };
 
 const update_product = async (id: string, user: string, body: IProduct) => {
-  const is_exist = await business_model.findOne({
-    $or: [{ user: user }, { user: [{ $in: [user] }] }],
-  });
-
-  if (!is_exist) throw new Error("Business not found");
-
-  const result = await product_model.findOneAndUpdate(
+  await product_model.findOneAndUpdate(
     { _id: id, user },
     {
       $set: {
@@ -135,7 +135,6 @@ const update_product = async (id: string, user: string, body: IProduct) => {
   return {
     success: true,
     message: "product updated successfully",
-    data: result,
   };
 };
 
@@ -179,16 +178,12 @@ const approve_product = async (id: string) => {
   };
 };
 
-const feature_product = async (id: string) => {
+const update_status = async (id: string, user: string, status: string) => {
   const result = await product_model.findOneAndUpdate(
-    { _id: id },
+    { _id: id, user },
     {
       $set: {
-        $cond: {
-          if: { $eq: ["$is_featured", false] },
-          then: true,
-          else: false,
-        },
+        status,
       },
     },
     { new: true },
@@ -208,5 +203,5 @@ export const product_service = Object.freeze({
   update_product,
   delete_product,
   approve_product,
-  feature_product,
+  update_status,
 });

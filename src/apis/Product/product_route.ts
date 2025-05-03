@@ -1,11 +1,11 @@
 import express from "express";
 import config from "../../DefaultConfig/config";
 import asyncWrapper from "../../middleware/asyncWrapper";
-import uploadFile from '../../middleware/fileUploader';
-import validateRequest from '../../middleware/validateRequest';
+import uploadFile from "../../middleware/fileUploader";
+import validateRequest from "../../middleware/validateRequest";
 import verifyToken from "../../middleware/verifyToken";
 import { product_controller } from "./product_controller";
-import { product_validate } from './product_validate';
+import { product_validate } from "./product_validate";
 
 export const product_router = express.Router();
 
@@ -18,7 +18,11 @@ product_router
     asyncWrapper(product_controller.create),
   )
 
-  .get("/product/get-all", asyncWrapper(product_controller.get_all))
+  .get(
+    "/product/get-all",
+    verifyToken(config.USER, false),
+    asyncWrapper(product_controller.get_all),
+  )
 
   .get(
     "/product/get-details/:id",
@@ -27,6 +31,8 @@ product_router
 
   .patch(
     "/product/update/:id",
+    uploadFile(),
+    validateRequest(product_validate.update_validate),
     verifyToken(config.VENDOR),
     asyncWrapper(product_controller.update),
   )
@@ -44,7 +50,7 @@ product_router
   )
 
   .patch(
-    "/product/feature/:id",
-    verifyToken(config.ADMIN),
-    asyncWrapper(product_controller.feature_product),
+    "/product/status/:id",
+    verifyToken(config.USER),
+    asyncWrapper(product_controller.update_status),
   );

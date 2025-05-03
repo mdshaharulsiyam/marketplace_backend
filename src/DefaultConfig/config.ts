@@ -44,7 +44,6 @@ const config = Object.freeze({
   STORE_ID: process.env.STORE_ID || "",
   STORE_PASSWORD: process.env.STORE_PASSWORD || "",
   IS_ALIVE: process.env.IS_ALIVE == "true" ? true : false,
-
 });
 
 export const HttpStatus = Object.freeze({
