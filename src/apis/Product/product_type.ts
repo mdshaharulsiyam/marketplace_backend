@@ -10,8 +10,8 @@ interface IProduct extends Document {
   condition: string;
   status: string;
   user: Types.ObjectId;
-  created_at?: Date;
-  updated_at?: Date;
+  createdAt?: Date;
+  updatedAt?: Date;
 }
 
 export default IProduct;

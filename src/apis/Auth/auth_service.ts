@@ -1,9 +1,9 @@
 import bcrypt from "bcrypt";
 import jwt from "jsonwebtoken";
-import mongoose from 'mongoose';
+import mongoose from "mongoose";
 import config from "../../DefaultConfig/config";
 import { UnlinkFiles } from "../../middleware/fileUploader";
-import Aggregator, { QueryKeys, SearchKeys } from '../../utils/Aggregator';
+import Aggregator, { QueryKeys, SearchKeys } from "../../utils/Aggregator";
 import hashText from "../../utils/hashText";
 import { verification_service } from "../Verification/verification_service";
 import auth_model from "./auth_model";
@@ -202,8 +202,8 @@ async function get_all(queryKeys: QueryKeys, searchKeys: SearchKeys) {
         from: "products",
         foreignField: "user",
         localField: "_id",
-        as: "products"
-      }
+        as: "products",
+      },
     },
     {
       $project: {
@@ -218,50 +218,50 @@ async function get_all(queryKeys: QueryKeys, searchKeys: SearchKeys) {
             $filter: {
               input: "$products",
               as: "product",
-              cond: { $eq: ["$$product.status", "ACTIVE"] }
-            }
-          }
+              cond: { $eq: ["$$product.status", "ACTIVE"] },
+            },
+          },
         },
         rejected_listing: {
           $size: {
             $filter: {
               input: "$products",
               as: "product",
-              cond: { $eq: ["$$product.status", "REJECTED"] }
-            }
-          }
+              cond: { $eq: ["$$product.status", "REJECTED"] },
+            },
+          },
         },
         pending_listing: {
           $size: {
             $filter: {
               input: "$products",
               as: "product",
-              cond: { $eq: ["$$product.status", "PENDING"] }
-            }
-          }
+              cond: { $eq: ["$$product.status", "PENDING"] },
+            },
+          },
         },
         sold_listing: {
           $size: {
             $filter: {
               input: "$products",
               as: "product",
-              cond: { $eq: ["$$product.status", "SOLD"] }
-            }
-          }
+              cond: { $eq: ["$$product.status", "SOLD"] },
+            },
+          },
         },
         img: 1,
-      }
-    }
-  ])
+      },
+    },
+  ]);
 }
 async function get_details(id: string) {
   const result = await auth_model.aggregate([
     {
       $match: {
-        _id: new mongoose.Types.ObjectId(id)
-      }
-    }
-    , {
+        _id: new mongoose.Types.ObjectId(id),
+      },
+    },
+    {
       $project: {
         _id: 1,
         name: 1,
@@ -269,14 +269,14 @@ async function get_details(id: string) {
         phone: 1,
         img: 1,
         role: 1,
-      }
-    }
-  ])
+      },
+    },
+  ]);
   return {
     success: true,
-    message: 'retrieve user details',
-    data: result?.[0]
-  }
+    message: "retrieve user details",
+    data: result?.[0],
+  };
 }
 export const auth_service = Object.freeze({
   sign_up,
@@ -288,5 +288,5 @@ export const auth_service = Object.freeze({
   block_auth,
   reset_password,
   get_all,
-  get_details
+  get_details,
 });

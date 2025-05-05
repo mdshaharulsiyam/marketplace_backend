@@ -37,8 +37,8 @@ const get_all = async (queryKeys: QueryKeys, searchKeys: SearchKeys) => {
           from: "favorites",
           localField: "_id",
           foreignField: "product",
-          as: "favorites"
-        }
+          as: "favorites",
+        },
       },
       {
         $project: {
@@ -46,8 +46,8 @@ const get_all = async (queryKeys: QueryKeys, searchKeys: SearchKeys) => {
             $cond: {
               if: { $gt: [{ $size: "$favorites" }, 0] },
               then: true,
-              else: false
-            }
+              else: false,
+            },
           },
           _id: 1,
           name: 1,
@@ -125,8 +125,8 @@ const get_details = async (id: string) => {
       $match: {
         category: product[0]?.category_id,
         _id: { $ne: new mongoose.Types.ObjectId(id) },
-        status: "ACTIVE"
-      }
+        status: "ACTIVE",
+      },
     },
     {
       $lookup: {
@@ -149,12 +149,12 @@ const get_details = async (id: string) => {
       },
     },
     {
-      $skip: 0
+      $skip: 0,
     },
     {
-      $limit: 10
-    }
-  ])
+      $limit: 10,
+    },
+  ]);
   // .find({
 
   // })
@@ -186,7 +186,6 @@ const update_product = async (id: string, user: string, body: IProduct) => {
 };
 
 const delete_product = async (id: string, user: string) => {
-
   const product = await product_model.findOne({ _id: id, user });
 
   if (!product) throw new Error("Product not found");

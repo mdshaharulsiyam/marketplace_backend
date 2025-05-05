@@ -77,8 +77,12 @@ auth_router
     verifyToken(config.ADMIN),
     asyncWrapper(auth_controller.block_auth),
   )
-  .get('/auth/get-all', verifyToken(config.ADMIN), asyncWrapper(auth_controller.get_all))
-  .get('/auth/details/:id', asyncWrapper(auth_controller.get_details))
+  .get(
+    "/auth/get-all",
+    verifyToken(config.ADMIN),
+    asyncWrapper(auth_controller.get_all),
+  )
+  .get("/auth/details/:id", asyncWrapper(auth_controller.get_details));
 // , undefined, undefined, async (req: Request) => {
 //   const [category, banner] = await Promise.all([
 //     category_model.find(),

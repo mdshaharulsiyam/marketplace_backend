@@ -6,7 +6,7 @@ import { category_router } from "../apis/Category/category_route";
 import { city_router } from "../apis/city/city_route";
 import { division_router } from "../apis/division/division_route";
 import { faq_router } from "../apis/faq/faq_route";
-import { favorite_router } from '../apis/favorite/favorite_route';
+import { favorite_router } from "../apis/favorite/favorite_route";
 import { notification_router } from "../apis/Notifications/notification_route";
 import { overview_router } from "../apis/Overview/overview_route";
 import { package_router } from "../apis/package/package_route";
