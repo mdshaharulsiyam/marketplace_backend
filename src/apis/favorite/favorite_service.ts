@@ -8,17 +8,22 @@ import { IAuth } from '../Auth/auth_types';
 import { service_model } from '../Service/service_model';
 import { favorite_model } from "./favorite_model";
 
-const create = async (data: any) => {
-  const result = await favorite_model.create(data)
+const create = async (data: any, is_exist: boolean) => {
+  if (is_exist) {
+    await favorite_model.deleteOne(data)
+  } else {
+    await favorite_model.create(data)
+  }
   return {
     success: true,
-    message: 'favorite created successfully',
-    data: result
+    message: `favorite ${is_exist ? "removed" : "added"} successfully`,
   }
 }
 
 const get_all = async (queryKeys: QueryKeys, searchKeys: SearchKeys) => {
-  return await Aggregator(favorite_model, queryKeys, searchKeys, [])
+  return await Aggregator(favorite_model, queryKeys, searchKeys, [
+
+  ])
 }
 
 const update = async (id: string, data: { [key: string]: string }) => {
