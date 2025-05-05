@@ -12,7 +12,7 @@ const service_schema = new Schema<IService>(
       type: Schema.Types.ObjectId,
       ref: "category",
       required: [true, "category is required"],
-    }
+    },
   },
   { timestamps: true },
 );

@@ -1,18 +1,20 @@
-import fs from "fs"
-import path from "path"
+import fs from "fs";
+import path from "path";
 
 // Adjusting the directory path to avoid "src" and point directly to the root of your project
-const _dirname = path.join(__dirname, "../.github/workflows")
+const _dirname = path.join(__dirname, "../.github/workflows");
 
 if (!fs.existsSync(_dirname)) {
-  fs.mkdirSync(_dirname, { recursive: true })
+  fs.mkdirSync(_dirname, { recursive: true });
 }
 
-const test_file = "test.yml"
-const deploy_file = "deploy.yml"
+const test_file = "test.yml";
+const deploy_file = "deploy.yml";
 
 if (!fs.existsSync(path.join(_dirname, test_file))) {
-  fs.writeFileSync(path.join(_dirname, test_file), `
+  fs.writeFileSync(
+    path.join(_dirname, test_file),
+    `
     name: Run Tests
 on:
   push:
@@ -41,11 +43,14 @@ jobs:
       - name: Building app
         run: npm run build
 
-    `)
+    `,
+  );
 }
 
 if (!fs.existsSync(path.join(_dirname, deploy_file))) {
-  fs.writeFileSync(path.join(_dirname, deploy_file), `
+  fs.writeFileSync(
+    path.join(_dirname, deploy_file),
+    `
   name: Deploy Node.js with TypeScript on EC2
 
 on:
@@ -124,5 +129,6 @@ jobs:
           # Start the backend application with PM2
           ssh $EC2_USER@$EC2_HOST "cd ~/applications/backend && pm2 start dist/index.js --name backend"
 
-    `)
+    `,
+  );
 }

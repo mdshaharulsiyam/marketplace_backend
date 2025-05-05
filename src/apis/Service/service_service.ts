@@ -1,5 +1,5 @@
 import { UnlinkFiles } from "../../middleware/fileUploader";
-import Aggregator from '../../utils/Aggregator';
+import Aggregator from "../../utils/Aggregator";
 import { QueryKeys, SearchKeys } from "../../utils/Queries";
 import { category_model } from "../Category/category_model";
 import { service_model } from "./service_model";
@@ -57,10 +57,7 @@ async function delete_service(id: string) {
   };
 }
 
-async function get_all(
-  queryKeys: QueryKeys,
-  searchKeys: SearchKeys,
-) {
+async function get_all(queryKeys: QueryKeys, searchKeys: SearchKeys) {
   return await Aggregator(
     service_model,
     queryKeys,
@@ -71,8 +68,8 @@ async function get_all(
           from: "categories",
           localField: "category",
           foreignField: "_id",
-          as: "category"
-        }
+          as: "category",
+        },
       },
       { $unwind: { path: "$category", preserveNullAndEmptyArrays: false } },
       {
@@ -80,10 +77,12 @@ async function get_all(
           _id: 1,
           name: 1,
           category_id: "$category._id",
-          category_name: "$category.name"
-        }
-      }
-    ], "end");
+          category_name: "$category.name",
+        },
+      },
+    ],
+    "end",
+  );
 }
 
 export const service_service = Object.freeze({

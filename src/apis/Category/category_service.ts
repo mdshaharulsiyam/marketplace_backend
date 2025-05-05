@@ -22,41 +22,50 @@ async function get_all(queryKeys: QueryKeys, searchKeys: SearchKeys) {
         _id: 1,
         name: 1,
         img: 1,
-      }
-    }
+      },
+    },
   ]);
 }
-async function get_category_services(queryKeys: QueryKeys, searchKeys: SearchKeys) {
-  return await Aggregator(category_model, queryKeys, searchKeys, [
-    {
-      $lookup: {
-        from: "services",
-        localField: "_id",
-        foreignField: "category",
-        as: "sub_category"
-      }
-    },
-    {
-      $group: {
-        _id: "$_id",
-        name: { $first: "$name" },
-        img: { $first: "$img" },
-        total_sub_category: { $first: { $size: "$sub_category" } },
-        sub_categories: {
-          $first: {
-            $map: {
-              input: "$sub_category",
-              as: "sub_category",
-              in: {
-                _id: "$$sub_category._id",
-                name: "$$sub_category.name"
-              }
-            }
-          }
+async function get_category_services(
+  queryKeys: QueryKeys,
+  searchKeys: SearchKeys,
+) {
+  return await Aggregator(
+    category_model,
+    queryKeys,
+    searchKeys,
+    [
+      {
+        $lookup: {
+          from: "services",
+          localField: "_id",
+          foreignField: "category",
+          as: "sub_category",
         },
-      }
-    }
-  ], "end");
+      },
+      {
+        $group: {
+          _id: "$_id",
+          name: { $first: "$name" },
+          img: { $first: "$img" },
+          total_sub_category: { $first: { $size: "$sub_category" } },
+          sub_categories: {
+            $first: {
+              $map: {
+                input: "$sub_category",
+                as: "sub_category",
+                in: {
+                  _id: "$$sub_category._id",
+                  name: "$$sub_category.name",
+                },
+              },
+            },
+          },
+        },
+      },
+    ],
+    "end",
+  );
 }
 
 async function update(id: string, data: { [key: string]: string }) {

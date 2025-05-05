@@ -8,7 +8,7 @@ const create_validation = z.object({
   cookies: z.string({
     required_error: "unauthorized access",
   }),
-})
+});
 export const division_validate = Object.freeze({
-  create_validation
-})
+  create_validation,
+});

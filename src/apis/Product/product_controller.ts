@@ -1,11 +1,12 @@
 import { Request, Response } from "express";
 import { HttpStatus } from "../../DefaultConfig/config";
 import { UnlinkFiles } from "../../middleware/fileUploader";
+import { QueryKeys } from "../../utils/Aggregator";
 import { sendResponse } from "../../utils/sendResponse";
+import { IAuth } from "../Auth/auth_types";
 import { product_service } from "./product_service";
 
 const create = async function (req: Request, res: Response) {
-
   req.body.user = req?.user?._id?.toString();
 
   const result = await product_service.create(req.body);
@@ -14,18 +15,22 @@ const create = async function (req: Request, res: Response) {
 };
 
 const get_all = async function (req: Request, res: Response) {
-  const { search, order, ...other_fields } =
-    req.query;
+  const { search, status = "ACTIVE", ...other_fields } = req.query;
 
   let searchKeys = {} as { name: string };
 
-  let queryKeys = { ...other_fields };
+  let queryKeys = { ...other_fields, status } as QueryKeys;
+  if (!req.user) queryKeys.status = "ACTIVE";
+
+  if (
+    req.user?.role != "ADMIN" &&
+    req.user?.role != "SUPER_ADMIN" &&
+    status != "ACTIVE"
+  )
+    queryKeys.user = req.user?._id;
 
   if (search) searchKeys.name = search as string;
-  const result = await product_service.get_all(
-    queryKeys,
-    searchKeys,
-  );
+  const result = await product_service.get_all(queryKeys, searchKeys);
   sendResponse(res, HttpStatus.SUCCESS, result);
 };
 
@@ -35,22 +40,16 @@ const get_product_details = async function (req: Request, res: Response) {
 };
 
 const update = async function (req: Request, res: Response) {
-  const { retained_images: prev, deleted_images: del, ...data } = req.body;
+  const { retained_images: prev, deleted_images: del, img, status, ...data } = req.body;
 
-  const retained_images = JSON.parse(prev);
-  const deleted_images = JSON.parse(del);
+  const retained_images = prev ? JSON.parse(prev) : [];
+  const deleted_images = del ? JSON.parse(del) : [];
 
   let updated_images: string[] = [];
-  if (retained_images && deleted_images.length > 0) {
+
+  if (retained_images) {
     updated_images = [...retained_images];
   }
-  // Handle image upload
-  const img =
-    (!Array.isArray(req.files) &&
-      req.files?.img &&
-      req.files.img.length > 0 &&
-      req.files.img?.map((doc: any) => doc.path)) ||
-    null;
 
   if (img) updated_images = [...updated_images, ...img];
 
@@ -59,7 +58,7 @@ const update = async function (req: Request, res: Response) {
     UnlinkFiles(deleted_images);
   }
 
-  data.img = updated_images;
+  if (updated_images?.length > 0) data.img = updated_images;
 
   const result = await product_service.update_product(
     req?.params?.id,
@@ -85,8 +84,21 @@ const approve_product = async function (req: Request, res: Response) {
   sendResponse(res, HttpStatus.SUCCESS, result);
 };
 
-const feature_product = async function (req: Request, res: Response) {
-  const result = await product_service.feature_product(req?.params?.id);
+const update_status = async function (req: Request, res: Response) {
+  const { status } = req.body;
+  const { role, _id } = req.user as IAuth;
+  if (role != "ADMIN" && role != "SUPER_ADMIN" && status == "APPROVED") {
+    throw new Error(`only admin can approve this product`);
+  }
+  if (role != "ADMIN" && role != "SUPER_ADMIN" && status == "REJECTED") {
+    throw new Error(`only admin can reject this product`);
+  }
+
+  const result = await product_service.update_status(
+    req?.params?.id,
+    _id?.toString() as string,
+    status,
+  );
 
   sendResponse(res, HttpStatus.SUCCESS, result);
 };
@@ -98,5 +110,5 @@ export const product_controller = Object.freeze({
   update,
   delete_product,
   approve_product,
-  feature_product,
+  update_status,
 });

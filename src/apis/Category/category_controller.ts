@@ -42,7 +42,10 @@ async function get_category_services(req: Request, res: Response) {
     ...otherValues,
   };
 
-  const result = await category_service.get_category_services(queryKeys, searchKeys);
+  const result = await category_service.get_category_services(
+    queryKeys,
+    searchKeys,
+  );
   sendResponse(res, HttpStatus.SUCCESS, result);
 }
 

@@ -7,17 +7,21 @@ const create_validation = z.object({
     }),
     price: z.number({
       required_error: "price is required",
-      invalid_type_error: "price should be a number"
+      invalid_type_error: "price should be a number",
     }),
-    features: z.array(z.string({
-      required_error: 'features is required'
-    })).min(1, "features is required"),
-    type: z.string({ required_error: "type is required" }).optional()
+    features: z
+      .array(
+        z.string({
+          required_error: "features is required",
+        }),
+      )
+      .min(1, "features is required"),
+    type: z.string({ required_error: "type is required" }).optional(),
   }),
   cookies: z.string({
-    required_error: "unauthorized error"
-  })
-})
+    required_error: "unauthorized error",
+  }),
+});
 export const package_validate = Object.freeze({
-  create_validation
-})
+  create_validation,
+});

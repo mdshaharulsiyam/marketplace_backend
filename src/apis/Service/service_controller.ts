@@ -18,10 +18,7 @@ async function get_all(req: Request, res: Response) {
   const queryKeys = {
     ...otherValues,
   };
-  const result = await service_service.get_all(
-    queryKeys,
-    searchKeys,
-  );
+  const result = await service_service.get_all(queryKeys, searchKeys);
   sendResponse(res, HttpStatus.SUCCESS, result);
 }
 
@@ -32,7 +29,7 @@ async function update(req: Request, res: Response) {
 
 async function delete_service(req: Request, res: Response) {
   const result = await service_service.delete_service(req?.params?.id); // req?.body, req?.user as IAuth
-  console.log(result)
+  console.log(result);
   sendResponse(res, HttpStatus.SUCCESS, result);
 }
 

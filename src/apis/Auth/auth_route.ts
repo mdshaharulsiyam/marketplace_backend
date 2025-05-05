@@ -1,11 +1,11 @@
-import express, { Request } from "express";
-import asyncWrapper from "../../middleware/asyncWrapper";
-import { auth_controller } from "./auth_controller";
-import verifyToken from "../../middleware/verifyToken";
-import config from "../../DefaultConfig/config";
-import uploadFile from "../../middleware/fileUploader";
+import express from "express";
 import rateLimit from "express-rate-limit";
+import config from "../../DefaultConfig/config";
+import asyncWrapper from "../../middleware/asyncWrapper";
+import uploadFile from "../../middleware/fileUploader";
 import validateRequest from "../../middleware/validateRequest";
+import verifyToken from "../../middleware/verifyToken";
+import { auth_controller } from "./auth_controller";
 import { auth_validate } from "./auth_validate";
 export const auth_router = express.Router();
 
@@ -31,6 +31,7 @@ auth_router
 
   .post(
     "/auth/sign-in",
+    // loginLimiter,
     validateRequest(auth_validate.login_validation),
     asyncWrapper(auth_controller.sing_in),
   )
@@ -75,7 +76,9 @@ auth_router
     "/auth/block/:id",
     verifyToken(config.ADMIN),
     asyncWrapper(auth_controller.block_auth),
-  );
+  )
+  .get('/auth/get-all', verifyToken(config.ADMIN), asyncWrapper(auth_controller.get_all))
+  .get('/auth/details/:id', asyncWrapper(auth_controller.get_details))
 // , undefined, undefined, async (req: Request) => {
 //   const [category, banner] = await Promise.all([
 //     category_model.find(),
