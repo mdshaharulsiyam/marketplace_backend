@@ -23012,3 +23012,107 @@ src/apis/Auth/auth_service.ts(260,47): error TS1351: An identifier or keyword ca
     at Module.load (node:internal/modules/cjs/loader:1469:32)
     at Function._load (node:internal/modules/cjs/loader:1286:12)
     at TracingChannel.traceSync (node:diagnostics_channel:322:14)
+2025-05-05 14:43:25 [ERROR]: Error: ⨯ Unable to compile TypeScript:
+src/apis/favorite/favorite_service.ts(31,7): error TS1109: Expression expected.
+
+    at Object.<anonymous> (D:\backend\ely_backend\src\apis\favorite\favorite_service.ts:1:7)
+    at Module.<anonymous> (node:internal/modules/cjs/loader:1734:14)
+    at Module._compile (D:\backend\ely_backend\node_modules\source-map-support\source-map-support.js:568:25)
+    at Module.m._compile (C:\Users\BDCALL~1\AppData\Local\Temp\ts-node-dev-hook-9632173467933949.js:69:33)
+    at loadTS (node:internal/modules/cjs/loader:1826:10)
+    at require.extensions.<computed> (C:\Users\BDCALL~1\AppData\Local\Temp\ts-node-dev-hook-9632173467933949.js:71:20)
+    at Object.nodeDevHook [as .ts] (D:\backend\ely_backend\node_modules\ts-node-dev\lib\hook.js:63:13)
+    at Module.load (node:internal/modules/cjs/loader:1469:32)
+    at Function._load (node:internal/modules/cjs/loader:1286:12)
+    at TracingChannel.traceSync (node:diagnostics_channel:322:14)
+2025-05-05 15:01:27 [ERROR]: Error: ⨯ Unable to compile TypeScript:
+src/apis/favorite/favorite_service.ts(39,5): error TS1005: ',' expected.
+
+    at Object.<anonymous> (D:\backend\ely_backend\src\apis\favorite\favorite_service.ts:1:7)
+    at Module.<anonymous> (node:internal/modules/cjs/loader:1734:14)
+    at Module._compile (D:\backend\ely_backend\node_modules\source-map-support\source-map-support.js:568:25)
+    at Module.m._compile (C:\Users\BDCALL~1\AppData\Local\Temp\ts-node-dev-hook-9632173467933949.js:69:33)
+    at loadTS (node:internal/modules/cjs/loader:1826:10)
+    at require.extensions.<computed> (C:\Users\BDCALL~1\AppData\Local\Temp\ts-node-dev-hook-9632173467933949.js:71:20)
+    at Object.nodeDevHook [as .ts] (D:\backend\ely_backend\node_modules\ts-node-dev\lib\hook.js:63:13)
+    at Module.load (node:internal/modules/cjs/loader:1469:32)
+    at Function._load (node:internal/modules/cjs/loader:1286:12)
+    at TracingChannel.traceSync (node:diagnostics_channel:322:14)
+2025-05-05 15:16:06 [ERROR]: Error: ⨯ Unable to compile TypeScript:
+src/apis/favorite/favorite_service.ts(47,5): error TS1005: ',' expected.
+
+    at Object.<anonymous> (D:\backend\ely_backend\src\apis\favorite\favorite_service.ts:1:7)
+    at Module.<anonymous> (node:internal/modules/cjs/loader:1734:14)
+    at Module._compile (D:\backend\ely_backend\node_modules\source-map-support\source-map-support.js:568:25)
+    at Module.m._compile (C:\Users\BDCALL~1\AppData\Local\Temp\ts-node-dev-hook-9632173467933949.js:69:33)
+    at loadTS (node:internal/modules/cjs/loader:1826:10)
+    at require.extensions.<computed> (C:\Users\BDCALL~1\AppData\Local\Temp\ts-node-dev-hook-9632173467933949.js:71:20)
+    at Object.nodeDevHook [as .ts] (D:\backend\ely_backend\node_modules\ts-node-dev\lib\hook.js:63:13)
+    at Module.load (node:internal/modules/cjs/loader:1469:32)
+    at Function._load (node:internal/modules/cjs/loader:1286:12)
+    at TracingChannel.traceSync (node:diagnostics_channel:322:14)
+2025-05-05 15:21:23 [ERROR]: Error: ⨯ Unable to compile TypeScript:
+src/apis/favorite/favorite_service.ts(52,5): error TS1005: ',' expected.
+
+    at Object.<anonymous> (D:\backend\ely_backend\src\apis\favorite\favorite_service.ts:1:7)
+    at Module.<anonymous> (node:internal/modules/cjs/loader:1734:14)
+    at Module._compile (D:\backend\ely_backend\node_modules\source-map-support\source-map-support.js:568:25)
+    at Module.m._compile (C:\Users\BDCALL~1\AppData\Local\Temp\ts-node-dev-hook-9632173467933949.js:69:33)
+    at loadTS (node:internal/modules/cjs/loader:1826:10)
+    at require.extensions.<computed> (C:\Users\BDCALL~1\AppData\Local\Temp\ts-node-dev-hook-9632173467933949.js:71:20)
+    at Object.nodeDevHook [as .ts] (D:\backend\ely_backend\node_modules\ts-node-dev\lib\hook.js:63:13)
+    at Module.load (node:internal/modules/cjs/loader:1469:32)
+    at Function._load (node:internal/modules/cjs/loader:1286:12)
+    at TracingChannel.traceSync (node:diagnostics_channel:322:14)
+2025-05-05 15:21:25 [ERROR]: Error: ⨯ Unable to compile TypeScript:
+src/apis/favorite/favorite_service.ts(52,5): error TS1005: ',' expected.
+
+    at Object.<anonymous> (D:\backend\ely_backend\src\apis\favorite\favorite_service.ts:1:7)
+    at Module.<anonymous> (node:internal/modules/cjs/loader:1734:14)
+    at Module._compile (D:\backend\ely_backend\node_modules\source-map-support\source-map-support.js:568:25)
+    at Module.m._compile (C:\Users\BDCALL~1\AppData\Local\Temp\ts-node-dev-hook-9632173467933949.js:69:33)
+    at loadTS (node:internal/modules/cjs/loader:1826:10)
+    at require.extensions.<computed> (C:\Users\BDCALL~1\AppData\Local\Temp\ts-node-dev-hook-9632173467933949.js:71:20)
+    at Object.nodeDevHook [as .ts] (D:\backend\ely_backend\node_modules\ts-node-dev\lib\hook.js:63:13)
+    at Module.load (node:internal/modules/cjs/loader:1469:32)
+    at Function._load (node:internal/modules/cjs/loader:1286:12)
+    at TracingChannel.traceSync (node:diagnostics_channel:322:14)
+2025-05-05 15:30:54 [ERROR]: Error: ⨯ Unable to compile TypeScript:
+src/apis/Product/product_service.ts(40,7): error TS1005: ',' expected.
+
+    at Object.<anonymous> (D:\backend\ely_backend\src\apis\Product\product_service.ts:1:7)
+    at Module.<anonymous> (node:internal/modules/cjs/loader:1734:14)
+    at Module._compile (D:\backend\ely_backend\node_modules\source-map-support\source-map-support.js:568:25)
+    at Module.m._compile (C:\Users\BDCALL~1\AppData\Local\Temp\ts-node-dev-hook-9632173467933949.js:69:33)
+    at loadTS (node:internal/modules/cjs/loader:1826:10)
+    at require.extensions.<computed> (C:\Users\BDCALL~1\AppData\Local\Temp\ts-node-dev-hook-9632173467933949.js:71:20)
+    at Object.nodeDevHook [as .ts] (D:\backend\ely_backend\node_modules\ts-node-dev\lib\hook.js:63:13)
+    at Module.load (node:internal/modules/cjs/loader:1469:32)
+    at Function._load (node:internal/modules/cjs/loader:1286:12)
+    at TracingChannel.traceSync (node:diagnostics_channel:322:14)
+2025-05-05 15:31:21 [ERROR]: Error: ⨯ Unable to compile TypeScript:
+src/apis/Product/product_service.ts(42,7): error TS1005: ',' expected.
+
+    at Object.<anonymous> (D:\backend\ely_backend\src\apis\Product\product_service.ts:1:7)
+    at Module.<anonymous> (node:internal/modules/cjs/loader:1734:14)
+    at Module._compile (D:\backend\ely_backend\node_modules\source-map-support\source-map-support.js:568:25)
+    at Module.m._compile (C:\Users\BDCALL~1\AppData\Local\Temp\ts-node-dev-hook-9632173467933949.js:69:33)
+    at loadTS (node:internal/modules/cjs/loader:1826:10)
+    at require.extensions.<computed> (C:\Users\BDCALL~1\AppData\Local\Temp\ts-node-dev-hook-9632173467933949.js:71:20)
+    at Object.nodeDevHook [as .ts] (D:\backend\ely_backend\node_modules\ts-node-dev\lib\hook.js:63:13)
+    at Module.load (node:internal/modules/cjs/loader:1469:32)
+    at Function._load (node:internal/modules/cjs/loader:1286:12)
+    at TracingChannel.traceSync (node:diagnostics_channel:322:14)
+2025-05-05 15:31:34 [ERROR]: Error: ⨯ Unable to compile TypeScript:
+src/apis/Product/product_service.ts(43,7): error TS1005: ',' expected.
+
+    at Object.<anonymous> (D:\backend\ely_backend\src\apis\Product\product_service.ts:1:7)
+    at Module.<anonymous> (node:internal/modules/cjs/loader:1734:14)
+    at Module._compile (D:\backend\ely_backend\node_modules\source-map-support\source-map-support.js:568:25)
+    at Module.m._compile (C:\Users\BDCALL~1\AppData\Local\Temp\ts-node-dev-hook-9632173467933949.js:69:33)
+    at loadTS (node:internal/modules/cjs/loader:1826:10)
+    at require.extensions.<computed> (C:\Users\BDCALL~1\AppData\Local\Temp\ts-node-dev-hook-9632173467933949.js:71:20)
+    at Object.nodeDevHook [as .ts] (D:\backend\ely_backend\node_modules\ts-node-dev\lib\hook.js:63:13)
+    at Module.load (node:internal/modules/cjs/loader:1469:32)
+    at Function._load (node:internal/modules/cjs/loader:1286:12)
+    at TracingChannel.traceSync (node:diagnostics_channel:322:14)

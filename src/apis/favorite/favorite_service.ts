@@ -22,7 +22,46 @@ const create = async (data: any, is_exist: boolean) => {
 
 const get_all = async (queryKeys: QueryKeys, searchKeys: SearchKeys) => {
   return await Aggregator(favorite_model, queryKeys, searchKeys, [
-
+    {
+      $lookup: {
+        from: "products",
+        foreignField: "_id",
+        localField: "product",
+        as: "product"
+      }
+    },
+    {
+      $unwind: {
+        path: "$product",
+        preserveNullAndEmptyArrays: false
+      }
+    },
+    {
+      $lookup: {
+        from: "categories",
+        foreignField: "_id",
+        localField: "product.category",
+        as: "category",
+      },
+    },
+    {
+      $addFields: {
+        is_favorite: true
+      }
+    },
+    {
+      $project: {
+        _id: "$product._id",
+        name: "$product.name",
+        price: "$product.price",
+        img: { $arrayElemAt: ["$product.img", 0] },
+        condition: "$product.condition",
+        category_name: {
+          $ifNull: [{ $arrayElemAt: ["$category.name", 0] }, null],
+        },
+        is_favorite: 1
+      },
+    },
   ])
 }
 

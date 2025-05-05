@@ -33,7 +33,22 @@ const get_all = async (queryKeys: QueryKeys, searchKeys: SearchKeys) => {
         },
       },
       {
+        $lookup: {
+          from: "favorites",
+          localField: "_id",
+          foreignField: "product",
+          as: "favorites"
+        }
+      },
+      {
         $project: {
+          is_favorite: {
+            $cond: {
+              if: { $gt: [{ $size: "$favorites" }, 0] },
+              then: true,
+              else: false
+            }
+          },
           _id: 1,
           name: 1,
           price: 1,
