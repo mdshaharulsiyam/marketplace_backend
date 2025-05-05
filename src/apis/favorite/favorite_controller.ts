@@ -1,13 +1,15 @@
 
 import { Request, Response } from "express";
 import { HttpStatus } from "../../DefaultConfig/config";
+import { QueryKeys } from '../../utils/Aggregator';
 import { sendResponse } from "../../utils/sendResponse";
 import { IAuth } from '../Auth/auth_types';
 import { SearchKeys } from './../../utils/Queries';
 import { favorite_service } from "./favorite_service";
 
 const create = async (req: Request, res: Response) => {
-  const result = await favorite_service.create({ product: req?.body?.product, user: req.user?._id })
+  const is_exist = req.extra?.is_exist?.length > 0
+  const result = await favorite_service.create({ product: req.params.product, user: req.user?._id }, is_exist)
   sendResponse(
     res,
     HttpStatus.CREATED,
@@ -19,12 +21,13 @@ const get_all = async (req: Request, res: Response) => {
 
   const { search, ...otherValues } = req?.query;
   const searchKeys: SearchKeys = {}
-
+  const { _id } = req?.user as IAuth
   if (search) searchKeys.name = search as string
 
   const queryKeys = {
-    ...otherValues
-  }
+    ...otherValues,
+    user: _id
+  } as QueryKeys
 
   const result = await favorite_service.get_all(queryKeys, searchKeys)
   sendResponse(
