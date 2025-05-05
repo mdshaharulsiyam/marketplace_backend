@@ -2,7 +2,6 @@ import mongoose from "mongoose";
 import { UnlinkFiles } from "../../middleware/fileUploader";
 import Aggregator from "../../utils/Aggregator";
 import { QueryKeys, SearchKeys } from "../../utils/Queries";
-import { business_model } from "../Business/business_model";
 import { product_model } from "./product_model";
 import IProduct from "./product_type";
 // interface IParameters extends IProduct {
@@ -102,17 +101,50 @@ const get_details = async (id: string) => {
         user_email: { $ifNull: [{ $arrayElemAt: ["$user.email", 0] }, null] },
         user_phone: { $ifNull: [{ $arrayElemAt: ["$user.phone", 0] }, null] },
         user_img: { $ifNull: [{ $arrayElemAt: ["$user.img", 0] }, null] },
-        user_id: { $ifNull: [{ $arrayElemAt: ["$user._id ", 0] }, null] },
+        user_id: { $ifNull: [{ $arrayElemAt: ["$user._id", 0] }, null] },
       },
     },
   ]);
-  const related_product = await product_model
-    .find({
-      category: product[0]?.category_id?.toString(),
-      _id: { $ne: id },
-    })
-    .skip(0)
-    .limit(8);
+  const related_product = await product_model.aggregate([
+    {
+      $match: {
+        category: product[0]?.category_id,
+        _id: { $ne: new mongoose.Types.ObjectId(id) },
+        status: "ACTIVE"
+      }
+    },
+    {
+      $lookup: {
+        from: "categories",
+        foreignField: "_id",
+        localField: "category",
+        as: "category",
+      },
+    },
+    {
+      $project: {
+        _id: 1,
+        name: 1,
+        price: 1,
+        img: { $arrayElemAt: ["$img", 0] },
+        condition: 1,
+        category_name: {
+          $ifNull: [{ $arrayElemAt: ["$category.name", 0] }, null],
+        },
+      },
+    },
+    {
+      $skip: 0
+    },
+    {
+      $limit: 10
+    }
+  ])
+  // .find({
+
+  // })
+  // .skip(0)
+  // .limit(8);
   return {
     success: true,
     message: "product data retrieved successfully",
@@ -139,11 +171,6 @@ const update_product = async (id: string, user: string, body: IProduct) => {
 };
 
 const delete_product = async (id: string, user: string) => {
-  const is_exist = await business_model.findOne({
-    $or: [{ user: user }, { user: [{ $in: [user] }] }],
-  });
-
-  if (!is_exist) throw new Error("Business not found");
 
   const product = await product_model.findOne({ _id: id, user });
 
@@ -151,12 +178,11 @@ const delete_product = async (id: string, user: string) => {
 
   if (product?.img) UnlinkFiles(product?.img);
 
-  const result = await product_model.findOneAndDelete({ _id: id, user });
+  await product_model.findOneAndDelete({ _id: id, user });
 
   return {
     success: true,
     message: "product deleted successfully",
-    data: result,
   };
 };
 
@@ -174,12 +200,11 @@ const approve_product = async (id: string) => {
   return {
     success: true,
     message: "product approved successfully",
-    data: result,
   };
 };
 
 const update_status = async (id: string, user: string, status: string) => {
-  const result = await product_model.findOneAndUpdate(
+  await product_model.findOneAndUpdate(
     { _id: id, user },
     {
       $set: {
@@ -191,8 +216,7 @@ const update_status = async (id: string, user: string, status: string) => {
 
   return {
     success: true,
-    message: `product  successfully`,
-    data: result,
+    message: `product ${status} successfully`,
   };
 };
 

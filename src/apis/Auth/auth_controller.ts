@@ -1,7 +1,8 @@
 import { Request, Response } from "express";
-import { auth_service } from "./auth_service";
-import { sendResponse } from "../../utils/sendResponse";
 import config, { HttpStatus } from "../../DefaultConfig/config";
+import { QueryKeys, SearchKeys } from '../../utils/Aggregator';
+import { sendResponse } from "../../utils/sendResponse";
+import { auth_service } from "./auth_service";
 import { IAuth } from "./auth_types";
 
 async function create(req: Request, res: Response) {
@@ -103,6 +104,26 @@ async function verify_identity(req: Request, res: Response) {
 
   sendResponse(res, HttpStatus.SUCCESS, result);
 }
+async function get_all(req: Request, res: Response) {
+  const { search, role = "USER", ...otherValues } = req?.query;
+  const searchKeys: SearchKeys = {};
+
+  if (search) searchKeys.name = search as string;
+
+  const queryKeys = {
+    ...otherValues,
+    role
+  } as QueryKeys;
+
+  const result = await auth_service.get_all(queryKeys, searchKeys);
+
+  sendResponse(res, HttpStatus.SUCCESS, result);
+}
+async function get_details(req: Request, res: Response) {
+  const { id } = req.params
+  const result = await auth_service.get_details(id)
+  sendResponse(res, HttpStatus.SUCCESS, result)
+}
 
 export const auth_controller = Object.freeze({
   create,
@@ -114,4 +135,6 @@ export const auth_controller = Object.freeze({
   reset_password,
   change_password,
   verify_identity,
+  get_all,
+  get_details
 });

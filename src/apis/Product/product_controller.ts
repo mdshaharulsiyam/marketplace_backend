@@ -40,7 +40,7 @@ const get_product_details = async function (req: Request, res: Response) {
 };
 
 const update = async function (req: Request, res: Response) {
-  const { retained_images: prev, deleted_images: del, img, ...data } = req.body;
+  const { retained_images: prev, deleted_images: del, img, status, ...data } = req.body;
 
   const retained_images = prev ? JSON.parse(prev) : [];
   const deleted_images = del ? JSON.parse(del) : [];
@@ -89,6 +89,9 @@ const update_status = async function (req: Request, res: Response) {
   const { role, _id } = req.user as IAuth;
   if (role != "ADMIN" && role != "SUPER_ADMIN" && status == "APPROVED") {
     throw new Error(`only admin can approve this product`);
+  }
+  if (role != "ADMIN" && role != "SUPER_ADMIN" && status == "REJECTED") {
+    throw new Error(`only admin can reject this product`);
   }
 
   const result = await product_service.update_status(

@@ -39,15 +39,15 @@ product_router
 
   .delete(
     "/product/delete/:id",
-    verifyToken(config.VENDOR),
+    verifyToken(config.USER),
     asyncWrapper(product_controller.delete_product),
   )
 
-  .patch(
-    "/product/approve/:id",
-    verifyToken(config.ADMIN),
-    asyncWrapper(product_controller.approve_product),
-  )
+  // .patch(
+  //   "/product/approve/:id",
+  //   verifyToken(config.ADMIN),
+  //   asyncWrapper(product_controller.approve_product),
+  // )
 
   .patch(
     "/product/status/:id",

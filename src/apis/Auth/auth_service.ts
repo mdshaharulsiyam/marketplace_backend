@@ -1,11 +1,13 @@
+import bcrypt from "bcrypt";
 import jwt from "jsonwebtoken";
+import mongoose from 'mongoose';
+import config from "../../DefaultConfig/config";
+import { UnlinkFiles } from "../../middleware/fileUploader";
+import Aggregator, { QueryKeys, SearchKeys } from '../../utils/Aggregator';
+import hashText from "../../utils/hashText";
 import { verification_service } from "../Verification/verification_service";
 import auth_model from "./auth_model";
 import { IAuth } from "./auth_types";
-import bcrypt from "bcrypt";
-import config from "../../DefaultConfig/config";
-import hashText from "../../utils/hashText";
-import { UnlinkFiles } from "../../middleware/fileUploader";
 async function sign_up(data: { [key: string]: string }, auth?: IAuth) {
   const {
     role,
@@ -189,10 +191,93 @@ async function block_auth(id: string) {
   );
   return {
     success: true,
-    message: `user ${result?.block ? "unblocked" : "blocked"} successfully`,
+    message: `user ${result?.block ? "blocked" : "unblocked"} successfully`,
   };
 }
 
+async function get_all(queryKeys: QueryKeys, searchKeys: SearchKeys) {
+  return await Aggregator(auth_model, queryKeys, searchKeys, [
+    {
+      $lookup: {
+        from: "products",
+        foreignField: "user",
+        localField: "_id",
+        as: "products"
+      }
+    },
+    {
+      $project: {
+        name: 1,
+        _id: 1,
+        email: 1,
+        phone: 1,
+        block: 1,
+        joined: "$createdAt",
+        active_listing: {
+          $size: {
+            $filter: {
+              input: "$products",
+              as: "product",
+              cond: { $eq: ["$$product.status", "ACTIVE"] }
+            }
+          }
+        },
+        rejected_listing: {
+          $size: {
+            $filter: {
+              input: "$products",
+              as: "product",
+              cond: { $eq: ["$$product.status", "REJECTED"] }
+            }
+          }
+        },
+        pending_listing: {
+          $size: {
+            $filter: {
+              input: "$products",
+              as: "product",
+              cond: { $eq: ["$$product.status", "PENDING"] }
+            }
+          }
+        },
+        sold_listing: {
+          $size: {
+            $filter: {
+              input: "$products",
+              as: "product",
+              cond: { $eq: ["$$product.status", "SOLD"] }
+            }
+          }
+        },
+        img: 1,
+      }
+    }
+  ])
+}
+async function get_details(id: string) {
+  const result = await auth_model.aggregate([
+    {
+      $match: {
+        _id: new mongoose.Types.ObjectId(id)
+      }
+    }
+    , {
+      $project: {
+        _id: 1,
+        name: 1,
+        email: 1,
+        phone: 1,
+        img: 1,
+        role: 1,
+      }
+    }
+  ])
+  return {
+    success: true,
+    message: 'retrieve user details',
+    data: result?.[0]
+  }
+}
 export const auth_service = Object.freeze({
   sign_up,
   sing_in,
@@ -202,4 +287,6 @@ export const auth_service = Object.freeze({
   verify_identity,
   block_auth,
   reset_password,
+  get_all,
+  get_details
 });
