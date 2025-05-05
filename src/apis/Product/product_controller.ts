@@ -40,7 +40,13 @@ const get_product_details = async function (req: Request, res: Response) {
 };
 
 const update = async function (req: Request, res: Response) {
-  const { retained_images: prev, deleted_images: del, img, status, ...data } = req.body;
+  const {
+    retained_images: prev,
+    deleted_images: del,
+    img,
+    status,
+    ...data
+  } = req.body;
 
   const retained_images = prev ? JSON.parse(prev) : [];
   const deleted_images = del ? JSON.parse(del) : [];

@@ -1,6 +1,6 @@
 import { Request, Response } from "express";
 import config, { HttpStatus } from "../../DefaultConfig/config";
-import { QueryKeys, SearchKeys } from '../../utils/Aggregator';
+import { QueryKeys, SearchKeys } from "../../utils/Aggregator";
 import { sendResponse } from "../../utils/sendResponse";
 import { auth_service } from "./auth_service";
 import { IAuth } from "./auth_types";
@@ -112,7 +112,7 @@ async function get_all(req: Request, res: Response) {
 
   const queryKeys = {
     ...otherValues,
-    role
+    role,
   } as QueryKeys;
 
   const result = await auth_service.get_all(queryKeys, searchKeys);
@@ -120,9 +120,9 @@ async function get_all(req: Request, res: Response) {
   sendResponse(res, HttpStatus.SUCCESS, result);
 }
 async function get_details(req: Request, res: Response) {
-  const { id } = req.params
-  const result = await auth_service.get_details(id)
-  sendResponse(res, HttpStatus.SUCCESS, result)
+  const { id } = req.params;
+  const result = await auth_service.get_details(id);
+  sendResponse(res, HttpStatus.SUCCESS, result);
 }
 
 export const auth_controller = Object.freeze({
@@ -136,5 +136,5 @@ export const auth_controller = Object.freeze({
   change_password,
   verify_identity,
   get_all,
-  get_details
+  get_details,
 });

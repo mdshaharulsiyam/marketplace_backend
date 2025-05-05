@@ -1,5 +1,3 @@
-
-
 import { Document, Types } from "mongoose";
 
 export interface IFavorite extends Document {
@@ -8,4 +6,3 @@ export interface IFavorite extends Document {
   createdAt: Date;
   updatedAt: Date;
 }
-
