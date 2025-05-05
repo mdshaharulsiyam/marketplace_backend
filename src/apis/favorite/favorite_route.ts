@@ -1,0 +1,25 @@
+
+import express from 'express';
+import config from '../../DefaultConfig/config';
+import asyncWrapper from '../../middleware/asyncWrapper';
+import uploadFile from '../../middleware/fileUploader';
+import validateRequest from '../../middleware/validateRequest';
+import verifyToken from '../../middleware/verifyToken';
+import { favorite_controller } from './favorite_controller';
+import { favorite_validate } from './favorite_validate';
+
+export const favorite_router = express.Router()
+
+favorite_router
+  .post('/favorite/create',
+    validateRequest(favorite_validate.create_validation),
+    verifyToken(config.ADMIN),
+    asyncWrapper(favorite_controller.create)
+  )
+
+  .get('/favorite/get-all', asyncWrapper(favorite_controller.get_all))
+
+  .patch('/favorite/update/:id', verifyToken(config.ADMIN), uploadFile(), asyncWrapper(favorite_controller.update))
+
+  .delete('/favorite/delete/:id', verifyToken(config.ADMIN), asyncWrapper(favorite_controller.delete_favorite))
+
