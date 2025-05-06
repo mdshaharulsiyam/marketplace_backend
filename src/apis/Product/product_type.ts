@@ -10,6 +10,7 @@ interface IProduct extends Document {
   condition: string;
   status: string;
   user: Types.ObjectId;
+  city: Types.ObjectId
   createdAt?: Date;
   updatedAt?: Date;
 }

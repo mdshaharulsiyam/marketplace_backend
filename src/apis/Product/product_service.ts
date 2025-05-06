@@ -10,6 +10,7 @@ import IProduct from "./product_type";
 //     coupon_code: string
 // }
 const create = async (body: IProduct) => {
+
   await product_model.create(body);
 
   return {
