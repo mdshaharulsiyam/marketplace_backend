@@ -1,19 +1,41 @@
 import bcrypt from "bcrypt";
+import { Request } from 'express';
 import mongoose from "mongoose";
 import Aggregator from "../../utils/Aggregator";
 import { QueryKeys, SearchKeys } from "../../utils/Queries";
 import { IAuth } from "../Auth/auth_types";
-import { IFavorite } from "../favorite/favorite_types";
+import { IPackage } from '../package/package_types';
+import { payment_service } from '../Payment/payment_service';
 import { service_model } from "../Service/service_model";
 import { subscription_model } from "./subscription_model";
+const create = async (data: any, packages: IPackage, req: Request) => {
 
-const create = async (data: IFavorite) => {
-  const is_exist = await subscription_model.findOne({ user: data?.user });
-  const result = await subscription_model.create(data);
+  const is_exist: any = await subscription_model.findOne({ user: data?.user }).populate("subscription_id")
+  if (is_exist && is_exist?.active) throw new Error(`you have already parched a subscription`)
+  const price_data = [
+    {
+      name: is_exist?.subscription_id?.name ?? packages?.name,
+      unit_amount: is_exist?.subscription_id?.price ? Number(is_exist?.subscription_id?.price) : Number(packages?.price),
+      quantity: 1,
+    }
+  ]
+  if (is_exist && !is_exist?.active) {
+    return await payment_service.payment_session(req, price_data, undefined, "subscription")
+  }
+
+  if (!packages) throw new Error(`subscription package doesn't exist`)
+  const date = new Date();
+
+  packages?.type == "YEARLY" ? date.setFullYear(date.getFullYear() + 1) : date.setMonth(date.getMonth() + 1)
+
+  data.expires_in = date
+
+  await subscription_model.create(data);
+  const session = await payment_service.payment_session(req, price_data, undefined, "subscription")
   return {
     success: true,
     message: "subscription created successfully",
-    data: result,
+    url: session?.url
   };
 };
 

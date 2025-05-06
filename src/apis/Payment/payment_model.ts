@@ -1,14 +1,14 @@
 import { model, Schema } from "mongoose";
-import { IPayment } from "./payment_type";
 import { currency_list_code } from "../../utils/stripe/stripe_currency";
+import { IPayment } from "./payment_type";
 
 const payment_schema = new Schema<IPayment>(
   {
     purpose: {
       type: String,
       required: [true, "purpose is required"],
-      default: "buy_credits",
-      enum: ["buy_credits"],
+      default: "subscription",
+      enum: ["subscription"],
     },
     session_id: {
       type: String,
