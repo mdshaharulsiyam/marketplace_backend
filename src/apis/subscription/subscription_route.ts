@@ -3,8 +3,8 @@ import config from "../../DefaultConfig/config";
 import asyncWrapper from "../../middleware/asyncWrapper";
 import uploadFile from "../../middleware/fileUploader";
 import verifyToken from "../../middleware/verifyToken";
+import { package_model } from '../package/package_model';
 import { subscription_controller } from "./subscription_controller";
-import { subscription_model } from "./subscription_model";
 
 export const subscription_router = express.Router();
 
@@ -12,10 +12,10 @@ subscription_router
   .post(
     "/subscription/create",
     verifyToken(config.USER, undefined, undefined, async (req: Request) => {
-      const subscription = await subscription_model.findById(
+      const packages = await package_model.findById(
         req.body.subscription_id,
       );
-      return { subscription };
+      return { packages };
     }),
     asyncWrapper(subscription_controller.create),
   )

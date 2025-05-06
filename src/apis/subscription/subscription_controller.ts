@@ -1,13 +1,14 @@
-import { SearchKeys } from "./../../utils/Queries";
 import { Request, Response } from "express";
-import { subscription_service } from "./subscription_service";
-import { sendResponse } from "../../utils/sendResponse";
 import { HttpStatus } from "../../DefaultConfig/config";
+import { sendResponse } from "../../utils/sendResponse";
 import { IAuth } from "../Auth/auth_types";
+import { SearchKeys } from "./../../utils/Queries";
+import { subscription_service } from "./subscription_service";
 
 const create = async (req: Request, res: Response) => {
-  const result = await subscription_service.create(req?.body);
-
+  const packages = req.extra?.packages
+  const { _id } = req.user as IAuth
+  const result = await subscription_service.create({ subscription_id: req.body?.subscription_id, user: _id }, packages, req);
   sendResponse(res, HttpStatus.CREATED, result);
 };
 
@@ -22,7 +23,9 @@ const get_all = async (req: Request, res: Response) => {
   };
 
   const result = await subscription_service.get_all(queryKeys, searchKeys);
+
   sendResponse(res, HttpStatus.SUCCESS, result);
+
 };
 
 const update = async (req: Request, res: Response) => {

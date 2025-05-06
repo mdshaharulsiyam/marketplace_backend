@@ -23116,3 +23116,184 @@ src/apis/Product/product_service.ts(43,7): error TS1005: ',' expected.
     at Module.load (node:internal/modules/cjs/loader:1469:32)
     at Function._load (node:internal/modules/cjs/loader:1286:12)
     at TracingChannel.traceSync (node:diagnostics_channel:322:14)
+2025-05-05 17:04:32 [ERROR]: D:\backend\ely_backend\src\apis\subscription\subscription_controller.ts:8
+    const package = req.extra?.package;
+          ^^^^^^^
+
+SyntaxError: Unexpected strict mode reserved word
+    at wrapSafe (node:internal/modules/cjs/loader:1666:18)
+    at Module.<anonymous> (node:internal/modules/cjs/loader:1708:20)
+    at Module._compile (D:\backend\ely_backend\node_modules\source-map-support\source-map-support.js:568:25)
+    at Module.m._compile (C:\Users\BDCALL~1\AppData\Local\Temp\ts-node-dev-hook-93770325125732.js:69:33)
+    at loadTS (node:internal/modules/cjs/loader:1826:10)
+    at require.extensions.<computed> (C:\Users\BDCALL~1\AppData\Local\Temp\ts-node-dev-hook-93770325125732.js:71:20)
+    at Object.nodeDevHook [as .ts] (D:\backend\ely_backend\node_modules\ts-node-dev\lib\hook.js:63:13)
+    at Module.load (node:internal/modules/cjs/loader:1469:32)
+    at Function._load (node:internal/modules/cjs/loader:1286:12)
+    at TracingChannel.traceSync (node:diagnostics_channel:322:14)
+2025-05-05 17:04:48 [ERROR]: D:\backend\ely_backend\src\apis\subscription\subscription_route.ts:18
+    return { package };
+             ^^^^^^^
+
+SyntaxError: Unexpected strict mode reserved word
+    at wrapSafe (node:internal/modules/cjs/loader:1666:18)
+    at Module.<anonymous> (node:internal/modules/cjs/loader:1708:20)
+    at Module._compile (D:\backend\ely_backend\node_modules\source-map-support\source-map-support.js:568:25)
+    at Module.m._compile (C:\Users\BDCALL~1\AppData\Local\Temp\ts-node-dev-hook-93770325125732.js:69:33)
+    at loadTS (node:internal/modules/cjs/loader:1826:10)
+    at require.extensions.<computed> (C:\Users\BDCALL~1\AppData\Local\Temp\ts-node-dev-hook-93770325125732.js:71:20)
+    at Object.nodeDevHook [as .ts] (D:\backend\ely_backend\node_modules\ts-node-dev\lib\hook.js:63:13)
+    at Module.load (node:internal/modules/cjs/loader:1469:32)
+    at Function._load (node:internal/modules/cjs/loader:1286:12)
+    at TracingChannel.traceSync (node:diagnostics_channel:322:14)
+2025-05-05 17:04:50 [ERROR]: D:\backend\ely_backend\src\apis\subscription\subscription_controller.ts:8
+    const package = req.extra?.package;
+          ^^^^^^^
+
+SyntaxError: Unexpected strict mode reserved word
+    at wrapSafe (node:internal/modules/cjs/loader:1666:18)
+    at Module.<anonymous> (node:internal/modules/cjs/loader:1708:20)
+    at Module._compile (D:\backend\ely_backend\node_modules\source-map-support\source-map-support.js:568:25)
+    at Module.m._compile (C:\Users\BDCALL~1\AppData\Local\Temp\ts-node-dev-hook-93770325125732.js:69:33)
+    at loadTS (node:internal/modules/cjs/loader:1826:10)
+    at require.extensions.<computed> (C:\Users\BDCALL~1\AppData\Local\Temp\ts-node-dev-hook-93770325125732.js:71:20)
+    at Object.nodeDevHook [as .ts] (D:\backend\ely_backend\node_modules\ts-node-dev\lib\hook.js:63:13)
+    at Module.load (node:internal/modules/cjs/loader:1469:32)
+    at Function._load (node:internal/modules/cjs/loader:1286:12)
+    at TracingChannel.traceSync (node:diagnostics_channel:322:14)
+2025-05-05 17:04:51 [ERROR]: D:\backend\ely_backend\src\apis\subscription\subscription_controller.ts:8
+    const package = req.extra?.package;
+          ^^^^^^^
+
+SyntaxError: Unexpected strict mode reserved word
+    at wrapSafe (node:internal/modules/cjs/loader:1666:18)
+    at Module.<anonymous> (node:internal/modules/cjs/loader:1708:20)
+    at Module._compile (D:\backend\ely_backend\node_modules\source-map-support\source-map-support.js:568:25)
+    at Module.m._compile (C:\Users\BDCALL~1\AppData\Local\Temp\ts-node-dev-hook-93770325125732.js:69:33)
+    at loadTS (node:internal/modules/cjs/loader:1826:10)
+    at require.extensions.<computed> (C:\Users\BDCALL~1\AppData\Local\Temp\ts-node-dev-hook-93770325125732.js:71:20)
+    at Object.nodeDevHook [as .ts] (D:\backend\ely_backend\node_modules\ts-node-dev\lib\hook.js:63:13)
+    at Module.load (node:internal/modules/cjs/loader:1469:32)
+    at Function._load (node:internal/modules/cjs/loader:1286:12)
+    at TracingChannel.traceSync (node:diagnostics_channel:322:14)
+2025-05-05 17:12:03 [ERROR]: Error: ⨯ Unable to compile TypeScript:
+src/apis/subscription/subscription_service.ts(24,34): error TS1109: Expression expected.
+
+    at Object.<anonymous> (D:\backend\ely_backend\src\apis\subscription\subscription_service.ts:1:7)
+    at Module.<anonymous> (node:internal/modules/cjs/loader:1734:14)
+    at Module._compile (D:\backend\ely_backend\node_modules\source-map-support\source-map-support.js:568:25)
+    at Module.m._compile (C:\Users\BDCALL~1\AppData\Local\Temp\ts-node-dev-hook-93770325125732.js:69:33)
+    at loadTS (node:internal/modules/cjs/loader:1826:10)
+    at require.extensions.<computed> (C:\Users\BDCALL~1\AppData\Local\Temp\ts-node-dev-hook-93770325125732.js:71:20)
+    at Object.nodeDevHook [as .ts] (D:\backend\ely_backend\node_modules\ts-node-dev\lib\hook.js:63:13)
+    at Module.load (node:internal/modules/cjs/loader:1469:32)
+    at Function._load (node:internal/modules/cjs/loader:1286:12)
+    at TracingChannel.traceSync (node:diagnostics_channel:322:14)
+2025-05-06 11:29:36 [ERROR]: Error: ⨯ Unable to compile TypeScript:
+src/apis/subscription/subscription_service.ts(18,29): error TS1005: ',' expected.
+src/apis/subscription/subscription_service.ts(19,28): error TS1005: ',' expected.
+src/apis/subscription/subscription_service.ts(20,25): error TS1005: ',' expected.
+
+    at Object.<anonymous> (D:\backend\ely_backend\src\apis\subscription\subscription_service.ts:1:7)
+    at Module.<anonymous> (node:internal/modules/cjs/loader:1734:14)
+    at Module._compile (D:\backend\ely_backend\node_modules\source-map-support\source-map-support.js:568:25)
+    at Module.m._compile (C:\Users\BDCALL~1\AppData\Local\Temp\ts-node-dev-hook-93770325125732.js:69:33)
+    at loadTS (node:internal/modules/cjs/loader:1826:10)
+    at require.extensions.<computed> (C:\Users\BDCALL~1\AppData\Local\Temp\ts-node-dev-hook-93770325125732.js:71:20)
+    at Object.nodeDevHook [as .ts] (D:\backend\ely_backend\node_modules\ts-node-dev\lib\hook.js:63:13)
+    at Module.load (node:internal/modules/cjs/loader:1469:32)
+    at Function._load (node:internal/modules/cjs/loader:1286:12)
+    at TracingChannel.traceSync (node:diagnostics_channel:322:14)
+2025-05-06 11:30:21 [ERROR]: Error: ⨯ Unable to compile TypeScript:
+src/apis/subscription/subscription_service.ts(13,136): error TS1005: '?' expected.
+
+    at Object.<anonymous> (D:\backend\ely_backend\src\apis\subscription\subscription_service.ts:1:7)
+    at Module.<anonymous> (node:internal/modules/cjs/loader:1734:14)
+    at Module._compile (D:\backend\ely_backend\node_modules\source-map-support\source-map-support.js:568:25)
+    at Module.m._compile (C:\Users\BDCALL~1\AppData\Local\Temp\ts-node-dev-hook-93770325125732.js:69:33)
+    at loadTS (node:internal/modules/cjs/loader:1826:10)
+    at require.extensions.<computed> (C:\Users\BDCALL~1\AppData\Local\Temp\ts-node-dev-hook-93770325125732.js:71:20)
+    at Object.nodeDevHook [as .ts] (D:\backend\ely_backend\node_modules\ts-node-dev\lib\hook.js:63:13)
+    at Module.load (node:internal/modules/cjs/loader:1469:32)
+    at Function._load (node:internal/modules/cjs/loader:1286:12)
+    at TracingChannel.traceSync (node:diagnostics_channel:322:14)
+2025-05-06 11:30:42 [ERROR]: Error: ⨯ Unable to compile TypeScript:
+src/apis/subscription/subscription_service.ts(13,50): error TS1005: '?' expected.
+
+    at Object.<anonymous> (D:\backend\ely_backend\src\apis\subscription\subscription_service.ts:1:7)
+    at Module.<anonymous> (node:internal/modules/cjs/loader:1734:14)
+    at Module._compile (D:\backend\ely_backend\node_modules\source-map-support\source-map-support.js:568:25)
+    at Module.m._compile (C:\Users\BDCALL~1\AppData\Local\Temp\ts-node-dev-hook-93770325125732.js:69:33)
+    at loadTS (node:internal/modules/cjs/loader:1826:10)
+    at require.extensions.<computed> (C:\Users\BDCALL~1\AppData\Local\Temp\ts-node-dev-hook-93770325125732.js:71:20)
+    at Object.nodeDevHook [as .ts] (D:\backend\ely_backend\node_modules\ts-node-dev\lib\hook.js:63:13)
+    at Module.load (node:internal/modules/cjs/loader:1469:32)
+    at Function._load (node:internal/modules/cjs/loader:1286:12)
+    at TracingChannel.traceSync (node:diagnostics_channel:322:14)
+2025-05-06 11:35:22 [ERROR]: Error: ⨯ Unable to compile TypeScript:
+src/apis/subscription/subscription_service.ts(23,74): error TS1005: ',' expected.
+
+    at Object.<anonymous> (D:\backend\ely_backend\src\apis\subscription\subscription_service.ts:1:7)
+    at Module.<anonymous> (node:internal/modules/cjs/loader:1734:14)
+    at Module._compile (D:\backend\ely_backend\node_modules\source-map-support\source-map-support.js:568:25)
+    at Module.m._compile (C:\Users\BDCALL~1\AppData\Local\Temp\ts-node-dev-hook-93770325125732.js:69:33)
+    at loadTS (node:internal/modules/cjs/loader:1826:10)
+    at require.extensions.<computed> (C:\Users\BDCALL~1\AppData\Local\Temp\ts-node-dev-hook-93770325125732.js:71:20)
+    at Object.nodeDevHook [as .ts] (D:\backend\ely_backend\node_modules\ts-node-dev\lib\hook.js:63:13)
+    at Module.load (node:internal/modules/cjs/loader:1469:32)
+    at Function._load (node:internal/modules/cjs/loader:1286:12)
+    at TracingChannel.traceSync (node:diagnostics_channel:322:14)
+2025-05-06 11:35:43 [ERROR]: Error: ⨯ Unable to compile TypeScript:
+src/apis/subscription/subscription_service.ts(23,12): error TS1109: Expression expected.
+
+    at Object.<anonymous> (D:\backend\ely_backend\src\apis\subscription\subscription_service.ts:1:7)
+    at Module.<anonymous> (node:internal/modules/cjs/loader:1734:14)
+    at Module._compile (D:\backend\ely_backend\node_modules\source-map-support\source-map-support.js:568:25)
+    at Module.m._compile (C:\Users\BDCALL~1\AppData\Local\Temp\ts-node-dev-hook-93770325125732.js:69:33)
+    at loadTS (node:internal/modules/cjs/loader:1826:10)
+    at require.extensions.<computed> (C:\Users\BDCALL~1\AppData\Local\Temp\ts-node-dev-hook-93770325125732.js:71:20)
+    at Object.nodeDevHook [as .ts] (D:\backend\ely_backend\node_modules\ts-node-dev\lib\hook.js:63:13)
+    at Module.load (node:internal/modules/cjs/loader:1469:32)
+    at Function._load (node:internal/modules/cjs/loader:1286:12)
+    at TracingChannel.traceSync (node:diagnostics_channel:322:14)
+2025-05-06 11:41:16 [ERROR]: Error: ⨯ Unable to compile TypeScript:
+src/apis/subscription/subscription_model.ts(10,7): error TS1005: ',' expected.
+
+    at Object.<anonymous> (D:\backend\ely_backend\src\apis\subscription\subscription_model.ts:1:7)
+    at Module.<anonymous> (node:internal/modules/cjs/loader:1734:14)
+    at Module._compile (D:\backend\ely_backend\node_modules\source-map-support\source-map-support.js:568:25)
+    at Module.m._compile (C:\Users\BDCALL~1\AppData\Local\Temp\ts-node-dev-hook-93770325125732.js:69:33)
+    at loadTS (node:internal/modules/cjs/loader:1826:10)
+    at require.extensions.<computed> (C:\Users\BDCALL~1\AppData\Local\Temp\ts-node-dev-hook-93770325125732.js:71:20)
+    at Object.nodeDevHook [as .ts] (D:\backend\ely_backend\node_modules\ts-node-dev\lib\hook.js:63:13)
+    at Module.load (node:internal/modules/cjs/loader:1469:32)
+    at Function._load (node:internal/modules/cjs/loader:1286:12)
+    at TracingChannel.traceSync (node:diagnostics_channel:322:14)
+2025-05-06 14:11:29 [ERROR]: Error: ⨯ Unable to compile TypeScript:
+src/apis/subscription/subscription_service.ts(14,1): error TS1435: Unknown keyword or identifier. Did you mean 'const'?
+
+    at Object.<anonymous> (D:\backend\ely_backend\src\apis\subscription\subscription_service.ts:1:7)
+    at Module.<anonymous> (node:internal/modules/cjs/loader:1734:14)
+    at Module._compile (D:\backend\ely_backend\node_modules\source-map-support\source-map-support.js:568:25)
+    at Module.m._compile (C:\Users\BDCALL~1\AppData\Local\Temp\ts-node-dev-hook-93770325125732.js:69:33)
+    at loadTS (node:internal/modules/cjs/loader:1826:10)
+    at require.extensions.<computed> (C:\Users\BDCALL~1\AppData\Local\Temp\ts-node-dev-hook-93770325125732.js:71:20)
+    at Object.nodeDevHook [as .ts] (D:\backend\ely_backend\node_modules\ts-node-dev\lib\hook.js:63:13)
+    at Module.load (node:internal/modules/cjs/loader:1469:32)
+    at Function._load (node:internal/modules/cjs/loader:1286:12)
+    at TracingChannel.traceSync (node:diagnostics_channel:322:14)
+2025-05-06 14:46:06 [ERROR]: Error: ⨯ Unable to compile TypeScript:
+src/apis/Payment/payment_service.ts(129,7): error TS1137: Expression or comma expected.
+src/apis/Payment/payment_service.ts(130,5): error TS1128: Declaration or statement expected.
+src/apis/Payment/payment_service.ts(130,6): error TS1128: Declaration or statement expected.
+
+    at Object.<anonymous> (D:\backend\ely_backend\src\apis\Payment\payment_service.ts:1:7)
+    at Module.<anonymous> (node:internal/modules/cjs/loader:1734:14)
+    at Module._compile (D:\backend\ely_backend\node_modules\source-map-support\source-map-support.js:568:25)
+    at Module.m._compile (C:\Users\BDCALL~1\AppData\Local\Temp\ts-node-dev-hook-93770325125732.js:69:33)
+    at loadTS (node:internal/modules/cjs/loader:1826:10)
+    at require.extensions.<computed> (C:\Users\BDCALL~1\AppData\Local\Temp\ts-node-dev-hook-93770325125732.js:71:20)
+    at Object.nodeDevHook [as .ts] (D:\backend\ely_backend\node_modules\ts-node-dev\lib\hook.js:63:13)
+    at Module.load (node:internal/modules/cjs/loader:1469:32)
+    at Function._load (node:internal/modules/cjs/loader:1286:12)
+    at TracingChannel.traceSync (node:diagnostics_channel:322:14)

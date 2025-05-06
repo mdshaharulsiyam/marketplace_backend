@@ -1,15 +1,15 @@
+import bcrypt from "bcrypt";
+import { Request } from "express";
 import mongoose from "mongoose";
 import { IPaymentData } from "../../types/data_types";
-import { payment_model } from "./payment_model";
-import auth_model from "../Auth/auth_model";
-import config from "../../DefaultConfig/config";
-import { notification_model } from "../Notifications/notification_model";
-import { stripe } from "./payment_controller";
 import { currency_list_code } from "../../utils/stripe/stripe_currency";
 import { country_list_code } from "../../utils/stripe/strupe_country";
-import { Request } from "express";
+import auth_model from "../Auth/auth_model";
 import { IAuth } from "../Auth/auth_types";
-import bcrypt from "bcrypt";
+import { notification_model } from '../Notifications/notification_model';
+import { subscription_model } from '../subscription/subscription_model';
+import { stripe } from "./payment_controller";
+import { payment_model } from "./payment_model";
 
 // const SSLCommerzPayment = require("sslcommerz-lts");
 async function validate_stripe_country_currency(
@@ -22,14 +22,56 @@ async function validate_stripe_country_currency(
     return country_list_code.includes(country_currency);
   }
 }
+async function payment_session(req: Request, price_data: any, currency?: any, purpose?: any) {
 
+  const session = await stripe.checkout.sessions.create({
+    payment_method_types: ["card"],
+
+    success_url: `${req.protocol + "://" + req.get("host")}/payment/success`,
+    cancel_url: `${req.protocol + "://" + req.get("host")}/payment/cancel`,
+
+    line_items: price_data?.map((item: IPaymentData) => ({
+      price_data: {
+        currency: currency ?? "USD",
+        product_data: {
+          name: item?.name ?? "purchase credits",
+        },
+        unit_amount: Number(item?.unit_amount) * 100,
+      },
+      quantity: item?.quantity ?? 1,
+    })) ?? [
+        {
+          price_data: {
+            currency: "usd",
+            product_data: {
+              name: "Maid Booking",
+            },
+            unit_amount: Number(1) * 100,
+          },
+          quantity: 1,
+        },
+      ],
+    mode: "payment",
+  });
+
+  const data = {
+    session_id: session?.id,
+    user: req.user?._id as string,
+    purpose: (purpose as string) ?? "subscription",
+    amount: await payment_service.calculate_amount(price_data),
+    currency: currency ?? "USD",
+  };
+  const result = await payment_service.create(data);
+
+  return { ...result, url: session?.url }
+}
 async function calculate_amount(price_data: IPaymentData[]) {
   return price_data
     ? price_data.reduce((total, item) => {
-        const unitAmount = Number(item.unit_amount) ?? 0;
-        const quantity = Number(item.quantity) ?? 1;
-        return total + unitAmount * quantity;
-      }, 0)
+      const unitAmount = Number(item.unit_amount) ?? 0;
+      const quantity = Number(item.quantity) ?? 1;
+      return total + unitAmount * quantity;
+    }, 0)
     : 0;
 }
 
@@ -47,50 +89,46 @@ async function success_payment(
 ) {
   const session = await mongoose.startSession();
   try {
-    const result = await session.withTransaction(async () => {
-      const is_exists_payment = await payment_model.findOne({ session_id });
+    await session.startTransaction()
+    const is_exists_payment = await payment_model.findOne({ session_id });
 
-      if (!is_exists_payment) throw new Error(`payment not found`);
-
-      const [result] = await Promise.all([
-        payment_model.findByIdAndUpdate(
-          is_exists_payment?._id,
-          {
-            $set: {
-              ...data,
-            },
+    if (!is_exists_payment) console.log(is_exists_payment);
+    // if (!is_exists_payment) throw new Error(`payment not found`);
+    const [result] = await Promise.all([
+      payment_model.findOneAndUpdate(
+        { session_id },
+        {
+          $set: {
+            status: data?.status,
+            transaction_id: data?.transaction_id,
           },
-          { session },
-        ),
-        auth_model.findByIdAndUpdate(
-          is_exists_payment?.user,
-          {
-            $inc: {
-              credits: is_exists_payment?.amount * config.CREDITS_PER_DOLLAR,
-            },
-          },
-          { session },
-        ),
+        },
+        { session },
+      ),
+      subscription_model.findOneAndUpdate(
+        { user: is_exists_payment?.user?.toString() },
+        {
+          $set: {
+            active: true
+          }
+        },
+        { session },
+      ),
 
-        notification_model.insertMany(
-          [
-            {
-              user: is_exists_payment?.user,
-              title: "payment success",
-              message: `payment of $${is_exists_payment?.amount} is success`,
-            },
-            {
-              user: is_exists_payment?.user,
-              title: "credit added",
-              message: `you have added $${is_exists_payment?.amount * config.CREDITS_PER_DOLLAR} credits`,
-            },
-          ],
-          { session },
-        ),
-      ]);
-      return result;
-    });
+      notification_model.insertMany(
+        [
+          {
+            user: is_exists_payment?.user?.toString(),
+            title: "payment success",
+            message: `payment of $${is_exists_payment?.amount} is success`,
+          },
+        ],
+        { session },
+      ),
+    ]);
+    await session.commitTransaction()
   } catch (error) {
+    console.log(error)
     throw error;
   } finally {
     await session.endSession();
@@ -273,4 +311,5 @@ export const payment_service = Object.freeze({
   transfer_balance,
   refund,
   validate_transfer_balance,
+  payment_session
 });
