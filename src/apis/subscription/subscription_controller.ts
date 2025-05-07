@@ -27,7 +27,11 @@ const get_all = async (req: Request, res: Response) => {
   sendResponse(res, HttpStatus.SUCCESS, result);
 
 };
-
+const get_my_subscription = async (req: Request, res: Response) => {
+  const { _id } = req.user as IAuth
+  const result = await subscription_service.get_my_subscription(_id?.toString() as string)
+  sendResponse(res, HttpStatus.SUCCESS, result)
+}
 const update = async (req: Request, res: Response) => {
   const img =
     (!Array.isArray(req.files) &&
@@ -56,4 +60,5 @@ export const subscription_controller = {
   get_all,
   update,
   delete_subscription,
+  get_my_subscription
 };

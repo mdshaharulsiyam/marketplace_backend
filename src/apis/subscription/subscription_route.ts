@@ -20,7 +20,8 @@ subscription_router
     asyncWrapper(subscription_controller.create),
   )
 
-  .get("/subscription/get-all", asyncWrapper(subscription_controller.get_all))
+  .get("/subscription/get-all", verifyToken(config.ADMIN), asyncWrapper(subscription_controller.get_all))
+  .get("/subscription/get-my-subscription", verifyToken(config.USER), asyncWrapper(subscription_controller.get_my_subscription))
 
   .patch(
     "/subscription/update/:id",

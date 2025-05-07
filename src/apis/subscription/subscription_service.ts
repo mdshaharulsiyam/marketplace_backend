@@ -42,7 +42,56 @@ const create = async (data: any, packages: IPackage, req: Request) => {
 const get_all = async (queryKeys: QueryKeys, searchKeys: SearchKeys) => {
   return await Aggregator(subscription_model, queryKeys, searchKeys, []);
 };
-
+const get_my_subscription = async (user: string) => {
+  const result = await subscription_model.aggregate([
+    {
+      $match: {
+        user: new mongoose.Types.ObjectId(user)
+      }
+    }
+    , {
+      $lookup: {
+        from: "packages",
+        foreignField: "_id",
+        localField: "subscription_id",
+        as: "subscription_id"
+      }
+    },
+    {
+      $project: {
+        type: { $arrayElemAt: ["$subscription_id.type", 0] },
+        price: { $arrayElemAt: ["$subscription_id.price", 0] },
+        name: { $arrayElemAt: ["$subscription_id.name", 0] },
+        subscription_id: { $arrayElemAt: ["$subscription_id._id", 0] },
+        expires_in: 1,
+        left_days: {
+          $cond: {
+            if: {
+              $lte: ["$expires_in", new Date()]
+            },
+            then: "Expired",
+            else: {
+              $ceil: {
+                $divide: [
+                  {
+                    $subtract: ["$expires_in", new Date()]
+                  },
+                  1000 * 60 * 60 * 24
+                ]
+              }
+            }
+          }
+        },
+        active: 1,
+      }
+    }
+  ])
+  return {
+    success: true,
+    message: `subscription retrieve successfully`,
+    data: result?.[0]
+  }
+}
 const update = async (id: string, data: { [key: string]: string }) => {
   const result = await subscription_model.findByIdAndUpdate(
     id,
@@ -103,4 +152,5 @@ export const subscription_service = Object.freeze({
   get_all,
   update,
   delete_subscription,
+  get_my_subscription
 });
