@@ -308,7 +308,28 @@ const get_all = async (queryKeys: QueryKeys, searchKeys: SearchKeys) => {
   return await Aggregator(
     payment_model,
     queryKeys,
-    searchKeys, [])
+    searchKeys, [
+    {
+      $lookup: {
+        from: "auths",
+        foreignField: "_id",
+        localField: "user",
+        as: "user"
+      }
+    },
+    {
+      $project: {
+        name: { $arrayElemAt: ["$user.name", 0] },
+        email: { $arrayElemAt: ["$user.email", 0] },
+        img: { $arrayElemAt: ["$user.img", 0] },
+        user_id: { $arrayElemAt: ["$user._id", 0] },
+        amount: 1,
+        updatedAt: 1,
+        transaction_id: 1,
+        _id: 1
+      }
+    }
+  ])
 }
 
 export const payment_service = Object.freeze({
