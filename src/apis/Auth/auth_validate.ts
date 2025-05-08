@@ -76,21 +76,23 @@ const reset_password_validate = z.object({
 });
 
 const change_password_validate = z.object({
-  old_password: z.string({
-    required_error: "old password is required",
-    invalid_type_error: "old password should be string",
-  }),
-  password: z
-    .string({ required_error: "Password is required" })
-    .min(8, "password should be more then 8 character")
-    .regex(
-      /^(?=.*[a-z])(?=.*[A-Z])(?=.*\d)(?=.*[\W_]).{8,}$/,
-      "Password must include uppercase, lowercase, number, and special character",
-    ),
-  confirm_password: z.string({
-    required_error: "confirm Password is required",
-    invalid_type_error: "confirm password should be string",
-  }),
+  body: z.object({
+    old_password: z.string({
+      required_error: "old password is required",
+      invalid_type_error: "old password should be string",
+    }),
+    password: z
+      .string({ required_error: "Password is required" })
+      .min(8, "password should be more then 8 character")
+      .regex(
+        /^(?=.*[a-z])(?=.*[A-Z])(?=.*\d)(?=.*[\W_]).{8,}$/,
+        "Password must include uppercase, lowercase, number, and special character",
+      ),
+    confirm_password: z.string({
+      required_error: "confirm Password is required",
+      invalid_type_error: "confirm password should be string",
+    }),
+  })
 });
 
 const update_auth_validation = z.object({

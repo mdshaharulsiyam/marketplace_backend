@@ -1,7 +1,7 @@
-import { Request, Response, NextFunction } from "express";
-import globalErrorHandler from "../utils/globalErrorHandler";
+import { NextFunction, Request, Response } from "express";
 import { AnyZodObject } from "zod";
 import config from "../DefaultConfig/config";
+import globalErrorHandler from "../utils/globalErrorHandler";
 import { UnlinkFiles } from "./fileUploader";
 
 const validateRequest = (
