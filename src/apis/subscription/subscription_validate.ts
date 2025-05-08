@@ -6,7 +6,7 @@ const create_validation = z.object({
       required_error: "subscription id is required",
     }),
   }),
-  cookies: z.string({ required_error: "unauthorize access" })
+  cookies: z.string({ required_error: "unauthorize access" }),
 });
 export const subscription_validate = Object.freeze({
   create_validation,

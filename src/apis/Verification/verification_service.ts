@@ -1,8 +1,8 @@
 import jwt from "jsonwebtoken";
 import mongoose from "mongoose";
+import config from "../../DefaultConfig/config";
 import auth_model from "../Auth/auth_model";
 import { verification_model } from "./verification_model";
-import config from "../../DefaultConfig/config";
 
 async function create(email: string) {
   const user = await auth_model.findOne({ email: email });
@@ -64,7 +64,7 @@ async function verify(data: { email: string; code: string }) {
         { expiresIn: 60 * 60 * 24 * 500 },
       );
       return {
-        success: false,
+        success: true,
         message: "email verified successfully",
         data: { email: result?.email, resetToken: accessToken, token: token },
       };

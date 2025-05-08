@@ -2,12 +2,13 @@ import bcrypt from "bcrypt";
 import { Request } from "express";
 import mongoose from "mongoose";
 import { IPaymentData } from "../../types/data_types";
+import Aggregator, { QueryKeys, SearchKeys } from '../../utils/Aggregator';
 import { currency_list_code } from "../../utils/stripe/stripe_currency";
 import { country_list_code } from "../../utils/stripe/strupe_country";
 import auth_model from "../Auth/auth_model";
 import { IAuth } from "../Auth/auth_types";
-import { notification_model } from '../Notifications/notification_model';
-import { subscription_model } from '../subscription/subscription_model';
+import { notification_model } from "../Notifications/notification_model";
+import { subscription_model } from "../subscription/subscription_model";
 import { stripe } from "./payment_controller";
 import { payment_model } from "./payment_model";
 
@@ -22,8 +23,12 @@ async function validate_stripe_country_currency(
     return country_list_code.includes(country_currency);
   }
 }
-async function payment_session(req: Request, price_data: any, currency?: any, purpose?: any) {
-
+async function payment_session(
+  req: Request,
+  price_data: any,
+  currency?: any,
+  purpose?: any,
+) {
   const session = await stripe.checkout.sessions.create({
     payment_method_types: ["card"],
 
@@ -63,7 +68,7 @@ async function payment_session(req: Request, price_data: any, currency?: any, pu
   };
   const result = await payment_service.create(data);
 
-  return { ...result, url: session?.url }
+  return { ...result, url: session?.url };
 }
 async function calculate_amount(price_data: IPaymentData[]) {
   return price_data
@@ -89,7 +94,7 @@ async function success_payment(
 ) {
   const session = await mongoose.startSession();
   try {
-    await session.startTransaction()
+    await session.startTransaction();
     const is_exists_payment = await payment_model.findOne({ session_id });
 
     if (!is_exists_payment) console.log(is_exists_payment);
@@ -109,8 +114,8 @@ async function success_payment(
         { user: is_exists_payment?.user?.toString() },
         {
           $set: {
-            active: true
-          }
+            active: true,
+          },
         },
         { session },
       ),
@@ -126,9 +131,9 @@ async function success_payment(
         { session },
       ),
     ]);
-    await session.commitTransaction()
+    await session.commitTransaction();
   } catch (error) {
-    console.log(error)
+    console.log(error);
     throw error;
   } finally {
     await session.endSession();
@@ -299,6 +304,12 @@ async function ssl_init(data: { [key: string]: string }, user?: IAuth) {
   //   config?.IS_ALIVE,
   // );
 }
+const get_all = async (queryKeys: QueryKeys, searchKeys: SearchKeys) => {
+  return await Aggregator(
+    payment_model,
+    queryKeys,
+    searchKeys, [])
+}
 
 export const payment_service = Object.freeze({
   create,
@@ -311,5 +322,6 @@ export const payment_service = Object.freeze({
   transfer_balance,
   refund,
   validate_transfer_balance,
-  payment_session
+  payment_session,
+  get_all
 });

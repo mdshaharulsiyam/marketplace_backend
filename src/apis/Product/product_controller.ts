@@ -15,13 +15,13 @@ const create = async function (req: Request, res: Response) {
 };
 
 const get_all = async function (req: Request, res: Response) {
-  const { search, status = "ACTIVE", ...other_fields } = req.query;
+  const { search, status = "ACTIVE", price_min, price_max, ...other_fields } = req.query;
 
   let searchKeys = {} as { name: string };
 
   let queryKeys = { ...other_fields, status } as QueryKeys;
   if (!req.user) queryKeys.status = "ACTIVE";
-
+  if (price_min && price_max) queryKeys.price = { $gte: Number(price_min), $lte: Number(price_max) }
   if (
     req.user?.role != "ADMIN" &&
     req.user?.role != "SUPER_ADMIN" &&

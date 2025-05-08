@@ -1,7 +1,7 @@
 import express from "express";
+import config from "../../DefaultConfig/config";
 import asyncWrapper from "../../middleware/asyncWrapper";
 import verifyToken from "../../middleware/verifyToken";
-import config from "../../DefaultConfig/config";
 import { payment_controller } from "./payment_controller";
 export const payment_route = express.Router();
 payment_route
@@ -47,4 +47,5 @@ payment_route
     "/payment/refund",
     verifyToken(config.ADMIN),
     asyncWrapper(payment_controller.refund),
-  );
+  )
+  .get(`/payment/get-all`, verifyToken(config.ADMIN), asyncWrapper(payment_controller.get_all))

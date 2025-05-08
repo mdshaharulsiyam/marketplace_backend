@@ -1,77 +1,77 @@
-name: Deploy Node.js with TypeScript on EC2
+# name: Deploy Node.js with TypeScript on EC2
 
-on:
-  push:
-    branches:
-      - "main"
-  pull_request:
-    branches:
-      - "main"
+# on:
+#   push:
+#     branches:
+#       - "main"
+#   pull_request:
+#     branches:
+#       - "main"
 
-jobs:
-  build:
-    runs-on: ubuntu-latest
+# jobs:
+#   build:
+#     runs-on: ubuntu-latest
 
-    steps:
-      - uses: actions/checkout@v3
-      - name: Set up Node.js
-        uses: actions/setup-node@v3
-        with:
-          node-version: "20.15"
-      - name: Install Dependencies
-        run: npm install --frozen-lockfile
-      - name: Install TypeScript Compiler
-        run: npm install -g typescript
-      - name: Build Project
-        run: npm run build
+#     steps:
+#       - uses: actions/checkout@v3
+#       - name: Set up Node.js
+#         uses: actions/setup-node@v3
+#         with:
+#           node-version: "20.15"
+#       - name: Install Dependencies
+#         run: npm install --frozen-lockfile
+#       - name: Install TypeScript Compiler
+#         run: npm install -g typescript
+#       - name: Build Project
+#         run: npm run build
 
-  deploy:
-    runs-on: ubuntu-latest
-    needs: build
+#   deploy:
+#     runs-on: ubuntu-latest
+#     needs: build
 
-    steps:
-      - uses: actions/checkout@v3
-      - name: Set up Node.js
-        uses: actions/setup-node@v3
-        with:
-          node-version: "20.15"
-      - name: Install Dependencies
-        run: npm install --frozen-lockfile
-      - name: Build Project
-        run: npm run build
-      - name: Configure SSH
-        env:
-          SSH_PRIVATE_KEY: ${{ secrets.SERVER_SSH_KEY }}
-        run: |
-          mkdir -p ~/.ssh
-          echo "$SSH_PRIVATE_KEY" > ~/.ssh/id_rsa
-          chmod 600 ~/.ssh/id_rsa
-          ssh-keyscan -H ${{ secrets.SERVER_HOST }} >> ~/.ssh/known_hosts
+#     steps:
+#       - uses: actions/checkout@v3
+#       - name: Set up Node.js
+#         uses: actions/setup-node@v3
+#         with:
+#           node-version: "20.15"
+#       - name: Install Dependencies
+#         run: npm install --frozen-lockfile
+#       - name: Build Project
+#         run: npm run build
+#       - name: Configure SSH
+#         env:
+#           SSH_PRIVATE_KEY: ${{ secrets.SERVER_SSH_KEY }}
+#         run: |
+#           mkdir -p ~/.ssh
+#           echo "$SSH_PRIVATE_KEY" > ~/.ssh/id_rsa
+#           chmod 600 ~/.ssh/id_rsa
+#           ssh-keyscan -H ${{ secrets.SERVER_HOST }} >> ~/.ssh/known_hosts
 
-      - name: Deploy Server
-        env:
-          EC2_HOST: ${{ secrets.SERVER_HOST }}
-          EC2_USER: ${{ secrets.SERVER_USER }}
-          ENV_VARS_JSON: ${{ secrets.ENV_VARS_JSON }}
-        run: |
-          # Create application directories on EC2 if they don't exist
-          ssh $EC2_USER@$EC2_HOST "mkdir -p ~/applications/backend"
+#       - name: Deploy Server
+#         env:
+#           EC2_HOST: ${{ secrets.SERVER_HOST }}
+#           EC2_USER: ${{ secrets.SERVER_USER }}
+#           ENV_VARS_JSON: ${{ secrets.ENV_VARS_JSON }}
+#         run: |
+#           # Create application directories on EC2 if they don't exist
+#           ssh $EC2_USER@$EC2_HOST "mkdir -p ~/applications/backend"
 
-          # Copy the backend project to EC2 using `rsync`
-          rsync -avz \
-            --exclude='.git' \
-            --exclude='node_modules' \
-            --exclude='.github' \
-            . $EC2_USER@$EC2_HOST:~/applications/backend/  # Deploy only the backend files
+#           # Copy the backend project to EC2 using `rsync`
+#           rsync -avz \
+#             --exclude='.git' \
+#             --exclude='node_modules' \
+#             --exclude='.github' \
+#             . $EC2_USER@$EC2_HOST:~/applications/backend/  # Deploy only the backend files
 
-          # Install production dependencies on EC2 for the backend
-          ssh $EC2_USER@$EC2_HOST "cd ~/applications/backend && npm install --frozen-lockfile --production"
+#           # Install production dependencies on EC2 for the backend
+#           ssh $EC2_USER@$EC2_HOST "cd ~/applications/backend && npm install --frozen-lockfile --production"
 
-          # Set the environment variables (using the ENV_VARS_JSON secret)
-          ssh $EC2_USER@$EC2_HOST "echo '$ENV_VARS_JSON' > ~/applications/backend/.env"
+#           # Set the environment variables (using the ENV_VARS_JSON secret)
+#           ssh $EC2_USER@$EC2_HOST "echo '$ENV_VARS_JSON' > ~/applications/backend/.env"
 
-          # Stop the existing PM2 process if it exists
-          ssh $EC2_USER@$EC2_HOST "pm2 delete backend || true"  # Ensures no errors if the process doesn't exist
+#           # Stop the existing PM2 process if it exists
+#           ssh $EC2_USER@$EC2_HOST "pm2 delete backend || true"  # Ensures no errors if the process doesn't exist
 
-          # Start the backend application with PM2
-          ssh $EC2_USER@$EC2_HOST "cd ~/applications/backend && pm2 start dist/index.js --name backend"
+#           # Start the backend application with PM2
+#           ssh $EC2_USER@$EC2_HOST "cd ~/applications/backend && pm2 start dist/index.js --name backend"

@@ -5,6 +5,7 @@ import config from "../../DefaultConfig/config";
 import { UnlinkFiles } from "../../middleware/fileUploader";
 import Aggregator, { QueryKeys, SearchKeys } from "../../utils/Aggregator";
 import hashText from "../../utils/hashText";
+import { subscription_model } from '../subscription/subscription_model';
 import { verification_service } from "../Verification/verification_service";
 import auth_model from "./auth_model";
 import { IAuth } from "./auth_types";
@@ -55,7 +56,7 @@ async function sing_in(data: { [key: string]: string }) {
   );
 
   return {
-    success: false,
+    success: true,
     message: `login successfully`,
     email: user?.email,
     token,
@@ -88,7 +89,7 @@ async function reset_password(data: { [key: string]: string }, auth: IAuth) {
     );
 
     return {
-      success: false,
+      success: true,
       message: `password reset successfully`,
       data: {
         email: auth?.email,
@@ -119,7 +120,7 @@ async function update_auth(
   },
   auth: IAuth,
 ) {
-  const result = await auth_model.updateOne(
+  await auth_model.updateOne(
     { _id: auth?._id },
     {
       $set: {
@@ -139,16 +140,16 @@ async function update_auth(
   return {
     success: true,
     message: "profile updated successfully",
-    data: result,
   };
 }
 
 async function get_profile(auth: IAuth) {
   const { password, ...otherDetails } = auth;
+  const is_exist = await subscription_model.findOne({ user: otherDetails?._id, active: true });
   return {
     success: true,
     message: "profile fetched successfully",
-    data: { ...otherDetails },
+    data: { ...otherDetails, is_subscribed: is_exist ? true : false },
   };
 }
 
