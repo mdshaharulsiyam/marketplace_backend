@@ -31,6 +31,11 @@ const product_schema = new Schema<IProduct>(
       ref: "city",
       required: [true, "city is required"],
     },
+    division: {
+      type: Schema.Types.ObjectId,
+      ref: "division",
+      required: [true, "city is required"],
+    },
     user: {
       type: Schema.Types.ObjectId,
       ref: "auth",

@@ -1,6 +1,7 @@
 import { Request, Response } from "express";
 import Stripe from "stripe";
 import config, { HttpStatus } from "../../DefaultConfig/config";
+import { SearchKeys } from '../../utils/Aggregator';
 import { sendResponse } from "../../utils/sendResponse";
 import auth_model from "../Auth/auth_model";
 import { auth_service } from "../Auth/auth_service";
@@ -17,7 +18,12 @@ async function create(req: Request, res: Response) {
 
   if (!is_valid) throw new Error("invalid currency");
 
-  const result = await payment_service.payment_session(req, price_data, currency, purpose)
+  const result = await payment_service.payment_session(
+    req,
+    price_data,
+    currency,
+    purpose,
+  );
 
   sendResponse(res, HttpStatus.SUCCESS, result);
 }
@@ -200,7 +206,19 @@ async function refund(req: Request, res: Response) {
 
   return sendResponse(res, HttpStatus.SUCCESS, result);
 }
+const get_all = async (req: Request, res: Response) => {
+  const { search, ...otherValues } = req?.query;
+  const searchKeys: SearchKeys = {};
 
+  if (search) searchKeys.name = search as string;
+
+  const queryKeys = {
+    ...otherValues,
+  };
+
+  const result = await payment_service.get_all(queryKeys, searchKeys);
+  sendResponse(res, HttpStatus.SUCCESS, result);
+}
 export const payment_controller = Object.freeze({
   create,
   success,
@@ -212,4 +230,5 @@ export const payment_controller = Object.freeze({
   check_payment_status,
   transfer_balance,
   refund,
+  get_all
 });

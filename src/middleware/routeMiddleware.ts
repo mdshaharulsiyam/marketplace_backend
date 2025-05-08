@@ -14,7 +14,7 @@ import { payment_route } from "../apis/Payment/payment_route";
 import { product_router } from "../apis/Product/product_route";
 import { service_router } from "../apis/Service/service_route";
 import { setting_router } from "../apis/Setting/setting_router";
-import { subscription_router } from '../apis/subscription/subscription_route';
+import { subscription_router } from "../apis/subscription/subscription_route";
 import { verification_router } from "../apis/Verification/verification_route";
 import { sendMail } from "../utils/sendMail";
 import asyncWrapper from "./asyncWrapper";

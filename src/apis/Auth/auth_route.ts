@@ -52,8 +52,9 @@ auth_router
 
   .patch(
     "/auth/update-profile",
-    verifyToken(config.USER),
     uploadFile(),
+    validateRequest(auth_validate.update_auth_validation),
+    verifyToken(config.USER),
     asyncWrapper(auth_controller.update_auth),
   )
 

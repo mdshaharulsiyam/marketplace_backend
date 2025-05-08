@@ -2,7 +2,7 @@ import mongoose from "mongoose";
 import { UnlinkFiles } from "../../middleware/fileUploader";
 import Aggregator from "../../utils/Aggregator";
 import { QueryKeys, SearchKeys } from "../../utils/Queries";
-import { subscription_model } from './../subscription/subscription_model';
+import { subscription_model } from "./../subscription/subscription_model";
 import { product_model } from "./product_model";
 import IProduct from "./product_type";
 // interface IParameters extends IProduct {
@@ -11,11 +11,14 @@ import IProduct from "./product_type";
 //     coupon_code: string
 // }
 const create = async (body: IProduct) => {
-  const subscription = await subscription_model.findOne({ user: body?.user })
+  const subscription = await subscription_model.findOne({ user: body?.user });
 
-  if (!subscription) throw new Error(`please parches subscription for add product`)
-  if (!subscription?.active) throw new Error(`your subscription payment is pending`)
-  if (subscription?.expires_in < new Date()) throw new Error(`your subscription is expired`)
+  if (!subscription)
+    throw new Error(`please parches subscription for add product`);
+  if (!subscription?.active)
+    throw new Error(`your subscription payment is pending`);
+  if (subscription?.expires_in < new Date())
+    throw new Error(`your subscription is expired`);
 
   await product_model.create(body);
 
