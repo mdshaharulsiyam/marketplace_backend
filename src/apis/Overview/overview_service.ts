@@ -1,7 +1,7 @@
 import auth_model from "../Auth/auth_model";
-import { category_model } from '../Category/category_model';
+import { category_model } from "../Category/category_model";
 import { payment_model } from "../Payment/payment_model";
-import { product_model } from '../Product/product_model';
+import { product_model } from "../Product/product_model";
 
 async function get_overview(year_user?: string, year_payment?: string) {
   const current_year_user = year_user
@@ -20,7 +20,7 @@ async function get_overview(year_user?: string, year_payment?: string) {
     users,
     users_year,
     payment_year,
-    active_listing
+    active_listing,
   ] = await Promise.all([
     auth_model.countDocuments({ role: "USER" }),
     category_model.countDocuments(),
@@ -97,7 +97,7 @@ async function get_overview(year_user?: string, year_payment?: string) {
         },
       },
     ]),
-    product_model.countDocuments({ status: "ACTIVE" })
+    product_model.countDocuments({ status: "ACTIVE" }),
   ]);
   const monthNames = [
     "January",

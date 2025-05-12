@@ -1,7 +1,7 @@
 import { Request, Response } from "express";
 import Stripe from "stripe";
 import config, { HttpStatus } from "../../DefaultConfig/config";
-import { SearchKeys } from '../../utils/Aggregator';
+import { SearchKeys } from "../../utils/Aggregator";
 import { sendResponse } from "../../utils/sendResponse";
 import auth_model from "../Auth/auth_model";
 import { auth_service } from "../Auth/auth_service";
@@ -218,7 +218,7 @@ const get_all = async (req: Request, res: Response) => {
 
   const result = await payment_service.get_all(queryKeys, searchKeys);
   sendResponse(res, HttpStatus.SUCCESS, result);
-}
+};
 export const payment_controller = Object.freeze({
   create,
   success,
@@ -230,5 +230,5 @@ export const payment_controller = Object.freeze({
   check_payment_status,
   transfer_balance,
   refund,
-  get_all
+  get_all,
 });

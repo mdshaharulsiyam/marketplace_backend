@@ -15,13 +15,20 @@ const create = async function (req: Request, res: Response) {
 };
 
 const get_all = async function (req: Request, res: Response) {
-  const { search, status = "ACTIVE", price_min, price_max, ...other_fields } = req.query;
+  const {
+    search,
+    status = "ACTIVE",
+    price_min,
+    price_max,
+    ...other_fields
+  } = req.query;
 
   let searchKeys = {} as { name: string };
 
   let queryKeys = { ...other_fields, status } as QueryKeys;
   if (!req.user) queryKeys.status = "ACTIVE";
-  if (price_min && price_max) queryKeys.price = { $gte: Number(price_min), $lte: Number(price_max) }
+  if (price_min && price_max)
+    queryKeys.price = { $gte: Number(price_min), $lte: Number(price_max) };
   if (
     req.user?.role != "ADMIN" &&
     req.user?.role != "SUPER_ADMIN" &&
@@ -30,12 +37,49 @@ const get_all = async function (req: Request, res: Response) {
     queryKeys.user = req.user?._id;
 
   if (search) searchKeys.name = search as string;
-  const result = await product_service.get_all(queryKeys, searchKeys);
+  const result = await product_service.get_all(
+    queryKeys,
+    searchKeys,
+    req.user?._id as string,
+  );
+  sendResponse(res, HttpStatus.SUCCESS, result);
+};
+const admin_get_all = async function (req: Request, res: Response) {
+  const {
+    search,
+    status = "ACTIVE",
+    price_min,
+    price_max,
+    ...other_fields
+  } = req.query;
+
+  let searchKeys = {} as { name: string };
+
+  let queryKeys = { ...other_fields, status } as QueryKeys;
+  if (!req.user) queryKeys.status = "ACTIVE";
+  if (price_min && price_max)
+    queryKeys.price = { $gte: Number(price_min), $lte: Number(price_max) };
+  if (
+    req.user?.role != "ADMIN" &&
+    req.user?.role != "SUPER_ADMIN" &&
+    status != "ACTIVE"
+  )
+    queryKeys.user = req.user?._id;
+
+  if (search) searchKeys.name = search as string;
+  const result = await product_service.admin_get_all(
+    queryKeys,
+    searchKeys,
+    req.user?._id as string,
+  );
   sendResponse(res, HttpStatus.SUCCESS, result);
 };
 
 const get_product_details = async function (req: Request, res: Response) {
-  const result = await product_service.get_details(req?.params?.id);
+  const result = await product_service.get_details(
+    req?.params?.id,
+    req.user?._id as string,
+  );
   sendResponse(res, HttpStatus.SUCCESS, result);
 };
 
@@ -117,4 +161,5 @@ export const product_controller = Object.freeze({
   delete_product,
   approve_product,
   update_status,
+  admin_get_all,
 });

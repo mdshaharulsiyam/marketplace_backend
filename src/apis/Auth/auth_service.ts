@@ -5,7 +5,7 @@ import config from "../../DefaultConfig/config";
 import { UnlinkFiles } from "../../middleware/fileUploader";
 import Aggregator, { QueryKeys, SearchKeys } from "../../utils/Aggregator";
 import hashText from "../../utils/hashText";
-import { subscription_model } from '../subscription/subscription_model';
+import { subscription_model } from "../subscription/subscription_model";
 import { verification_service } from "../Verification/verification_service";
 import auth_model from "./auth_model";
 import { IAuth } from "./auth_types";
@@ -145,7 +145,10 @@ async function update_auth(
 
 async function get_profile(auth: IAuth) {
   const { password, ...otherDetails } = auth;
-  const is_exist = await subscription_model.findOne({ user: otherDetails?._id, active: true });
+  const is_exist = await subscription_model.findOne({
+    user: otherDetails?._id,
+    active: true,
+  });
   return {
     success: true,
     message: "profile fetched successfully",
@@ -222,6 +225,9 @@ async function get_all(queryKeys: QueryKeys, searchKeys: SearchKeys) {
               cond: { $eq: ["$$product.status", "ACTIVE"] },
             },
           },
+        },
+        total_listing: {
+          $size: "$products",
         },
         rejected_listing: {
           $size: {

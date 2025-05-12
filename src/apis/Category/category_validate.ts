@@ -12,6 +12,7 @@ const create_validate = z.object({
           required_error: "Each image must be a string",
           invalid_type_error: "img should be string url",
         }),
+        { required_error: "image is required" },
       )
       .min(1, "image is required")
       .max(1, "maximum 1 image can be upload"),

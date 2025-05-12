@@ -2,7 +2,7 @@ import bcrypt from "bcrypt";
 import { Request } from "express";
 import mongoose from "mongoose";
 import { IPaymentData } from "../../types/data_types";
-import Aggregator, { QueryKeys, SearchKeys } from '../../utils/Aggregator';
+import Aggregator, { QueryKeys, SearchKeys } from "../../utils/Aggregator";
 import { currency_list_code } from "../../utils/stripe/stripe_currency";
 import { country_list_code } from "../../utils/stripe/strupe_country";
 import auth_model from "../Auth/auth_model";
@@ -45,17 +45,17 @@ async function payment_session(
       },
       quantity: item?.quantity ?? 1,
     })) ?? [
-        {
-          price_data: {
-            currency: "usd",
-            product_data: {
-              name: "Maid Booking",
-            },
-            unit_amount: Number(1) * 100,
+      {
+        price_data: {
+          currency: "usd",
+          product_data: {
+            name: "Maid Booking",
           },
-          quantity: 1,
+          unit_amount: Number(1) * 100,
         },
-      ],
+        quantity: 1,
+      },
+    ],
     mode: "payment",
   });
 
@@ -73,10 +73,10 @@ async function payment_session(
 async function calculate_amount(price_data: IPaymentData[]) {
   return price_data
     ? price_data.reduce((total, item) => {
-      const unitAmount = Number(item.unit_amount) ?? 0;
-      const quantity = Number(item.quantity) ?? 1;
-      return total + unitAmount * quantity;
-    }, 0)
+        const unitAmount = Number(item.unit_amount) ?? 0;
+        const quantity = Number(item.quantity) ?? 1;
+        return total + unitAmount * quantity;
+      }, 0)
     : 0;
 }
 
@@ -305,17 +305,14 @@ async function ssl_init(data: { [key: string]: string }, user?: IAuth) {
   // );
 }
 const get_all = async (queryKeys: QueryKeys, searchKeys: SearchKeys) => {
-  return await Aggregator(
-    payment_model,
-    queryKeys,
-    searchKeys, [
+  return await Aggregator(payment_model, queryKeys, searchKeys, [
     {
       $lookup: {
         from: "auths",
         foreignField: "_id",
         localField: "user",
-        as: "user"
-      }
+        as: "user",
+      },
     },
     {
       $project: {
@@ -326,11 +323,11 @@ const get_all = async (queryKeys: QueryKeys, searchKeys: SearchKeys) => {
         amount: 1,
         updatedAt: 1,
         transaction_id: 1,
-        _id: 1
-      }
-    }
-  ])
-}
+        _id: 1,
+      },
+    },
+  ]);
+};
 
 export const payment_service = Object.freeze({
   create,
@@ -344,5 +341,5 @@ export const payment_service = Object.freeze({
   refund,
   validate_transfer_balance,
   payment_session,
-  get_all
+  get_all,
 });

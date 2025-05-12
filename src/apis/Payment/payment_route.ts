@@ -48,4 +48,8 @@ payment_route
     verifyToken(config.ADMIN),
     asyncWrapper(payment_controller.refund),
   )
-  .get(`/payment/get-all`, verifyToken(config.ADMIN), asyncWrapper(payment_controller.get_all))
+  .get(
+    `/payment/get-all`,
+    verifyToken(config.ADMIN),
+    asyncWrapper(payment_controller.get_all),
+  );
