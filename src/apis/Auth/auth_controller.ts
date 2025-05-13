@@ -60,7 +60,7 @@ async function update_auth(req: Request, res: Response) {
     img,
     ...otherValues
   } = req?.body;
-  if (img) otherValues.img = img?.[0]
+  if (img) otherValues.img = img?.[0];
   const result = await auth_service.update_auth(
     {
       ...otherValues,

@@ -1,9 +1,9 @@
 import { Request, Response } from "express";
-import { SearchKeys } from "../../utils/Queries";
 import { HttpStatus } from "../../DefaultConfig/config";
+import { SearchKeys } from "../../utils/Queries";
 import { sendResponse } from "../../utils/sendResponse";
-import { notification_service } from "./notification_service";
 import { IAuth } from "../Auth/auth_types";
+import { notification_service } from "./notification_service";
 
 async function get_all(req: Request, res: Response) {
   const { search, ...otherValues } = req?.query;
@@ -41,8 +41,13 @@ async function read(req: Request, res: Response) {
 
   sendResponse(res, HttpStatus.SUCCESS, result);
 }
+async function delete_notification(req: Request, res: Response) {
+  const { _id, role } = req.user as IAuth
 
+  // sendResponse(res, HttpStatus.SUCCESS, result);
+}
 export const notification_controller = Object.freeze({
   get_all,
   read,
+  delete_notification
 });

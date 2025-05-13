@@ -92,7 +92,7 @@ const change_password_validate = z.object({
       required_error: "confirm Password is required",
       invalid_type_error: "confirm password should be string",
     }),
-  })
+  }),
 });
 
 const update_auth_validation = z.object({

@@ -14,7 +14,7 @@ product_router
     "/product/create",
     uploadFile(),
     validateRequest(product_validate.create_validate),
-    verifyToken(config.VENDOR),
+    verifyToken(config.USER),
     asyncWrapper(product_controller.create),
   )
 
@@ -25,7 +25,14 @@ product_router
   )
 
   .get(
+    "/product/admin-get-all",
+    verifyToken(config.ADMIN),
+    asyncWrapper(product_controller.admin_get_all),
+  )
+
+  .get(
     "/product/get-details/:id",
+    verifyToken(config.USER, false),
     asyncWrapper(product_controller.get_product_details),
   )
 

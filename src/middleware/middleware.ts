@@ -1,9 +1,8 @@
-import express from "express";
-import { Express, urlencoded } from "express";
 import cookieParser from "cookie-parser";
 import cors from "cors";
-import config from "../DefaultConfig/config";
+import express, { Express } from "express";
 import rateLimit from "express-rate-limit";
+import config from "../DefaultConfig/config";
 const limiter = rateLimit({
   windowMs: 1 * 60 * 1000,
   max: 100, //limit: 100,
@@ -31,7 +30,7 @@ const middleware = (app: Express) => {
       //     console.log(config?.ALLOWED_ORIGIN,origin)
       //     config?.ALLOWED_ORIGIN?.includes(origin || "") ? callback(null, true) : callback(new Error('origin not allowed'))
       // },
-      origin: config?.ALLOWED_ORIGIN,
+      origin: [...config?.ALLOWED_ORIGIN, "http://10.0.60.25:3000"],
       optionsSuccessStatus: 200,
       credentials: true,
     }),

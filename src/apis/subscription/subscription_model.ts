@@ -30,13 +30,12 @@ export const subscription_model = model<ISubscription>(
   subscription_schema,
 );
 
-cron.schedule('0 2 * * *', async () => {
+cron.schedule("0 2 * * *", async () => {
   try {
     await subscription_model.updateMany(
       { expires_in: { $lt: new Date() }, active: true }, // Find expired subscriptions
-      { $set: { active: false } }
+      { $set: { active: false } },
     );
-
   } catch (error) {
     console.error("Error updating expired subscriptions:", error);
   }

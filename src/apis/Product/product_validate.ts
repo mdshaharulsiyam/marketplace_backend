@@ -6,7 +6,9 @@ const create_validate = z.object({
     description: z.string().min(1, { message: "Description is required" }),
     price: z.string({ required_error: "price is required" }),
     img: z
-      .array(z.string({ required_error: "image is required" }))
+      .array(z.string({ required_error: "image is required" }), {
+        required_error: "image is required",
+      })
       .max(6, { message: "A maximum of 6 images are allowed" })
       .refine((value) => value.length <= 6, {
         message: "A maximum of 6 images are allowed.",

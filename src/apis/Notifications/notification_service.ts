@@ -43,9 +43,22 @@ async function read_notification(id: string, user: IAuth) {
     data: result,
   };
 }
-
+async function delete_notification(query: any) {
+  const result = await notification_model.deleteOne(query)
+  if (result?.deletedCount > 0) {
+    return {
+      success: true,
+      message: "notification deleted successfully"
+    }
+  }
+  return {
+    success: false,
+    message: "unable to delete notification"
+  }
+}
 export const notification_service = Object.freeze({
   create,
   get_all,
   read_notification,
+  delete_notification
 });

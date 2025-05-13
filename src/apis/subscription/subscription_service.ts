@@ -157,11 +157,10 @@ const renew = async (data: any, packages: IPackage, req: Request) => {
   data.expires_in = date;
   data.active = false;
 
-  await subscription_model.findByIdAndUpdate(
-    is_exist?._id, {
+  await subscription_model.findByIdAndUpdate(is_exist?._id, {
     $set: {
-      ...data
-    }
+      ...data,
+    },
   });
   const session = await payment_service.payment_session(
     req,
