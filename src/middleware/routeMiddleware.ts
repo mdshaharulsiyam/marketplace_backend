@@ -4,9 +4,11 @@ import { auth_router } from "../apis/Auth/auth_route";
 import { banner_router } from "../apis/Banner/banner_route";
 import { category_router } from "../apis/Category/category_route";
 import { city_router } from "../apis/city/city_route";
+import { conversation_router } from '../apis/conversation/conversation_route';
 import { division_router } from "../apis/division/division_route";
 import { faq_router } from "../apis/faq/faq_route";
 import { favorite_router } from "../apis/favorite/favorite_route";
+import { message_router } from '../apis/message/message_route';
 import { notification_router } from "../apis/Notifications/notification_route";
 import { overview_router } from "../apis/Overview/overview_route";
 import { package_router } from "../apis/package/package_route";
@@ -55,4 +57,6 @@ export const routeMiddleware = (app: Express) => {
   app.use(package_router);
   app.use(favorite_router);
   app.use(subscription_router);
+  app.use(conversation_router);
+  app.use(message_router);
 };

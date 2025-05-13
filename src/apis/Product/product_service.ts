@@ -225,6 +225,22 @@ const get_details = async (id: string, user: string) => {
     },
     {
       $lookup: {
+        from: "divisions",
+        foreignField: "_id",
+        localField: "division",
+        as: "division",
+      },
+    },
+    {
+      $lookup: {
+        from: "cities",
+        foreignField: "_id",
+        localField: "city",
+        as: "city",
+      },
+    },
+    {
+      $lookup: {
         from: "favorites",
         localField: "_id",
         foreignField: "product",
@@ -273,6 +289,48 @@ const get_details = async (id: string, user: string) => {
         sub_category_name: {
           $ifNull: [{ $arrayElemAt: ["$sub_category.name", 0] }, null],
         },
+        categories: {
+          $cond: {
+            if: { $gt: [{ $size: { $ifNull: ["$category", []] } }, 0] },
+            then: {
+              name: { $ifNull: [{ $arrayElemAt: ["$category.name", 0] }, null], },
+              img: { $ifNull: [{ $arrayElemAt: ["$category.img", 0] }, null], },
+              _id: { $ifNull: [{ $arrayElemAt: ["$category._id", 0] }, null], },
+            },
+            else: null
+          }
+        },
+        sub_categories: {
+          $cond: {
+            if: { $gt: [{ $size: { $ifNull: ["$sub_category", []] } }, 0] },
+            then: {
+              name: { $ifNull: [{ $arrayElemAt: ["$sub_category.name", 0] }, null], },
+              _id: { $ifNull: [{ $arrayElemAt: ["$sub_category._id", 0] }, null], },
+            },
+            else: null
+          }
+        },
+        divisions: {
+          $cond: {
+            if: { $gt: [{ $size: { $ifNull: ["$division", []] } }, 0] },
+            then: {
+              name: { $ifNull: [{ $arrayElemAt: ["$division.name", 0] }, null], },
+              _id: { $ifNull: [{ $arrayElemAt: ["$division._id", 0] }, null], }
+            },
+            else: null
+          }
+        },
+        cities: {
+          $cond: {
+            if: { $gt: [{ $size: { $ifNull: ["$city", []] } }, 0] },
+            then: {
+              name: { $ifNull: [{ $arrayElemAt: ["$city.name", 0] }, null], },
+              _id: { $ifNull: [{ $arrayElemAt: ["$city._id", 0] }, null], }
+            },
+            else: null
+          }
+        },
+
         user_name: { $ifNull: [{ $arrayElemAt: ["$user.name", 0] }, null] },
         user_email: { $ifNull: [{ $arrayElemAt: ["$user.email", 0] }, null] },
         user_phone: { $ifNull: [{ $arrayElemAt: ["$user.phone", 0] }, null] },
@@ -335,6 +393,7 @@ const update_product = async (id: string, user: string, body: IProduct) => {
     {
       $set: {
         ...body,
+        status: "PENDING"
       },
     },
     { new: true },
@@ -404,3 +463,8 @@ export const product_service = Object.freeze({
   update_status,
   admin_get_all,
 });
+/*
+default 1111
+
+
+*/
