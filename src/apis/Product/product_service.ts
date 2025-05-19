@@ -393,7 +393,8 @@ const update_product = async (id: string, user: string, body: IProduct) => {
     {
       $set: {
         ...body,
-        status: "PENDING"
+        // status: "PENDING"
+        status: "ACTIVE",
       },
     },
     { new: true },
@@ -436,9 +437,9 @@ const approve_product = async (id: string) => {
   };
 };
 
-const update_status = async (id: string, user: string, status: string) => {
+const update_status = async (query: any, status: string) => {
   await product_model.findOneAndUpdate(
-    { _id: id, user },
+    query,
     {
       $set: {
         status,

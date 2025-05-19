@@ -109,13 +109,14 @@ async function delete_category(
 
   try {
     const [result] = await Promise.all([
-      category_model.findByIdAndDelete(id, { session }),
+      category_model.deleteMany({ _id: id }, { session }),
       service_model.deleteMany({ category: id }, { session }),
     ]);
+    await session.commitTransaction();
+    await session.endSession();
     return {
       success: true,
       message: "category deleted successfully",
-      data: result,
     };
   } catch (error) {
     await session.startTransaction();

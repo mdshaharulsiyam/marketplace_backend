@@ -43,8 +43,11 @@ async function read(req: Request, res: Response) {
 }
 async function delete_notification(req: Request, res: Response) {
   const { _id, role } = req.user as IAuth
+  let query = { _id: req.params.id } as any
+  if (role !== "ADMIN" && role !== "SUPER_ADMIN") query.user = _id
+  const result = await notification_service.delete_notification(query)
 
-  // sendResponse(res, HttpStatus.SUCCESS, result);
+  sendResponse(res, HttpStatus.SUCCESS, result);
 }
 export const notification_controller = Object.freeze({
   get_all,

@@ -1,17 +1,17 @@
 import { Document, Types } from "mongoose";
 
 interface IProduct extends Document {
+  product_id: string;
   name: string;
-  description: string;
   price: number;
-  img: string[];
+  quantity: number;
   category: Types.ObjectId;
   sub_category: Types.ObjectId;
-  condition: string;
+  description: string;
+  img: string[];
   status: string;
   user: Types.ObjectId;
-  city: Types.ObjectId;
-  division: Types.ObjectId;
+  order_range: [number, number];
   createdAt?: Date;
   updatedAt?: Date;
 }

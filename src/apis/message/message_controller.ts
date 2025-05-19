@@ -1,9 +1,9 @@
-import { SearchKeys } from "./../../utils/Queries";
 import { Request, Response } from "express";
-import { message_service } from "./message_service";
-import { sendResponse } from "../../utils/sendResponse";
 import { HttpStatus } from "../../DefaultConfig/config";
+import { sendResponse } from "../../utils/sendResponse";
 import { IAuth } from "../Auth/auth_types";
+import { SearchKeys } from "./../../utils/Queries";
+import { message_service } from "./message_service";
 
 async function create(req: Request, res: Response) {
   const img =
@@ -34,7 +34,7 @@ async function get_all(req: Request, res: Response) {
     ...otherValues,
   };
 
-  queryKeys.sender = req.user?._id as string;
+  // queryKeys.sender = req.user?._id as string;
 
   const populatePath: string | string[] = "";
   const selectFields: string | string[] = "";
