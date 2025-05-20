@@ -4,6 +4,7 @@ import { UnlinkFiles } from "../../middleware/fileUploader";
 import Aggregator from "../../utils/Aggregator";
 import { QueryKeys, SearchKeys } from "../../utils/Queries";
 import { IAuth } from "../Auth/auth_types";
+import { product_model } from '../Product/product_model';
 import { service_model } from "../Service/service_model";
 import { category_model } from "./category_model";
 async function create(data: { [key: string]: string }) {
@@ -111,6 +112,7 @@ async function delete_category(
     const [result] = await Promise.all([
       category_model.deleteMany({ _id: id }, { session }),
       service_model.deleteMany({ category: id }, { session }),
+      product_model.deleteMany({ category: id }, { session }),
     ]);
     await session.commitTransaction();
     await session.endSession();
