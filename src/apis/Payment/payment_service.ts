@@ -45,17 +45,17 @@ async function payment_session(
       },
       quantity: item?.quantity ?? 1,
     })) ?? [
-      {
-        price_data: {
-          currency: "usd",
-          product_data: {
-            name: "Maid Booking",
+        {
+          price_data: {
+            currency: "usd",
+            product_data: {
+              name: "Maid Booking",
+            },
+            unit_amount: Number(1) * 100,
           },
-          unit_amount: Number(1) * 100,
+          quantity: 1,
         },
-        quantity: 1,
-      },
-    ],
+      ],
     mode: "payment",
   });
 
@@ -73,10 +73,10 @@ async function payment_session(
 async function calculate_amount(price_data: IPaymentData[]) {
   return price_data
     ? price_data.reduce((total, item) => {
-        const unitAmount = Number(item.unit_amount) ?? 0;
-        const quantity = Number(item.quantity) ?? 1;
-        return total + unitAmount * quantity;
-      }, 0)
+      const unitAmount = Number(item.unit_amount) ?? 0;
+      const quantity = Number(item.quantity) ?? 1;
+      return total + unitAmount * quantity;
+    }, 0)
     : 0;
 }
 
