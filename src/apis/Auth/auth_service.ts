@@ -301,6 +301,13 @@ async function get_details(id: string) {
     data: result?.[0],
   };
 }
+const delete_account = async (id: string) => {
+  await auth_model.deleteOne({ _id: id });
+  return {
+    success: true,
+    message: "account deleted successfully",
+  };
+}
 export const auth_service = Object.freeze({
   sign_up,
   sing_in,
@@ -312,4 +319,5 @@ export const auth_service = Object.freeze({
   reset_password,
   get_all,
   get_details,
+  delete_account
 });
