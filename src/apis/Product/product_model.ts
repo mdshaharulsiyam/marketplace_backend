@@ -26,11 +26,25 @@ const product_schema = new Schema<IProduct>(
       ref: "service",
       required: [true, "Sub category is required"],
     },
-
+    division: {
+      type: Schema.Types.ObjectId,
+      ref: "division",
+      required: [true, "Division is required"],
+    },
+    city: {
+      type: Schema.Types.ObjectId,
+      ref: "city",
+      required: [true, "City is required"],
+    },
     user: {
       type: Schema.Types.ObjectId,
       ref: "auth",
       required: [true, "User is required"],
+    },
+    condition: {
+      type: String,
+      enum: ["NEW", "USED"],
+      default: "NEW",
     },
     status: {
       type: String,

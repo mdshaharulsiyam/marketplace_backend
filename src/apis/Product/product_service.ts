@@ -82,6 +82,7 @@ const get_all = async (
             },
           },
           _id: 1,
+          createdAt: 1,
           name: 1,
           price: 1,
           img: { $arrayElemAt: ["$img", 0] },
