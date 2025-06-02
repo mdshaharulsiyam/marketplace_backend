@@ -255,7 +255,7 @@ function capitalize(str: string): string {
   return str.charAt(0).toUpperCase() + str.slice(1);
 }
 
-// Run script with arguments
+// Run script with arguments as profileName and m as moduleName
 const args: string[] = process.argv.slice(2);
 
 if (args.length !== 2) {
