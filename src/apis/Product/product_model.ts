@@ -26,15 +26,15 @@ const product_schema = new Schema<IProduct>(
       ref: "service",
       required: [true, "Sub category is required"],
     },
-    city: {
-      type: Schema.Types.ObjectId,
-      ref: "city",
-      required: [true, "city is required"],
-    },
     division: {
       type: Schema.Types.ObjectId,
       ref: "division",
-      required: [true, "city is required"],
+      required: [true, "Division is required"],
+    },
+    city: {
+      type: Schema.Types.ObjectId,
+      ref: "city",
+      required: [true, "City is required"],
     },
     user: {
       type: Schema.Types.ObjectId,
@@ -43,13 +43,13 @@ const product_schema = new Schema<IProduct>(
     },
     condition: {
       type: String,
-      enum: ["USED", "NEW"],
-      required: [true, "product condition is required"],
+      enum: ["NEW", "USED"],
+      default: "NEW",
     },
     status: {
       type: String,
       enum: ["ARCHIVED", "ACTIVE", "SOLD", "PENDING", "REJECTED"],
-      default: "PENDING",
+      default: "ACTIVE",
     },
   },
   { timestamps: true },

@@ -5,6 +5,7 @@ import config from "../../DefaultConfig/config";
 import { UnlinkFiles } from "../../middleware/fileUploader";
 import Aggregator, { QueryKeys, SearchKeys } from "../../utils/Aggregator";
 import hashText from "../../utils/hashText";
+import { package_model } from '../package/package_model';
 import { subscription_model } from "../subscription/subscription_model";
 import { verification_service } from "../Verification/verification_service";
 import auth_model from "./auth_model";
@@ -30,10 +31,25 @@ async function sign_up(data: { [key: string]: string }, auth?: IAuth) {
 
   if (user) return await verification_service.create(user.email as string);
 
-  await auth_model.create({
-    ...otherValues,
-    ...((auth?.role == "ADMIN" || auth?.role == "SUPER_ADMIN") && { role }),
-  });
+  const [result, packages] = await Promise.all([
+    auth_model.create({
+      ...otherValues,
+      ...((auth?.role == "ADMIN" || auth?.role == "SUPER_ADMIN") && { role }),
+    }),
+    package_model.findOne({
+      type: "MONTHLY",
+    })
+  ]);
+
+  const date = new Date();
+  const subscription_data = {
+    subscription_id: packages?._id,
+    user: result?._id,
+    expires_in: date.setMonth(date.getMonth() + 3),
+    active: true
+  }
+
+  await subscription_model.create(subscription_data);
 
   return await verification_service.create(otherValues?.email as string);
 }

@@ -13,7 +13,7 @@ const conversation_schema = new Schema<IConversation>(
         },
         message: "At least 2 users are required",
       },
-      unique: true,
+      // unique: true,
     },
   },
   { timestamps: true },

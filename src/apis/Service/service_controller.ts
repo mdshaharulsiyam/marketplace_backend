@@ -29,7 +29,6 @@ async function update(req: Request, res: Response) {
 
 async function delete_service(req: Request, res: Response) {
   const result = await service_service.delete_service(req?.params?.id); // req?.body, req?.user as IAuth
-  console.log(result);
   sendResponse(res, HttpStatus.SUCCESS, result);
 }
 

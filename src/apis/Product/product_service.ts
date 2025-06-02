@@ -82,6 +82,7 @@ const get_all = async (
             },
           },
           _id: 1,
+          createdAt: 1,
           name: 1,
           price: 1,
           img: { $arrayElemAt: ["$img", 0] },
@@ -393,7 +394,8 @@ const update_product = async (id: string, user: string, body: IProduct) => {
     {
       $set: {
         ...body,
-        status: "PENDING"
+        // status: "PENDING"
+        status: "ACTIVE",
       },
     },
     { new: true },
@@ -436,9 +438,9 @@ const approve_product = async (id: string) => {
   };
 };
 
-const update_status = async (id: string, user: string, status: string) => {
+const update_status = async (query: any, status: string) => {
   await product_model.findOneAndUpdate(
-    { _id: id, user },
+    query,
     {
       $set: {
         status,

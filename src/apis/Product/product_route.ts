@@ -40,7 +40,7 @@ product_router
     "/product/update/:id",
     uploadFile(),
     validateRequest(product_validate.update_validate),
-    verifyToken(config.VENDOR),
+    verifyToken(config.USER),
     asyncWrapper(product_controller.update),
   )
 

@@ -1,4 +1,4 @@
-import { Request, Response, NextFunction } from "express";
+import { NextFunction, Request, Response } from "express";
 export class CustomError extends Error {
   public statusCode: number;
   public status: string;
@@ -45,7 +45,9 @@ const handleDuplicateKeyError = (err: any, model: any) => {
   // Check for writeErrors in bulk operations
   if (err?.writeErrors && Array.isArray(err.writeErrors)) {
     err.writeErrors.forEach((writeError: any) => {
-      message = writeError?.err?.errmsg;
+      const key_message = writeError?.err?.errmsg?.split(":");
+
+      message = `[ ${key_message?.[key_message?.length - 1]?.split("}")?.[0]?.split(`"`)?.[1]} ] already exist`
     });
   }
 

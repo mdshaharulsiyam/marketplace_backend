@@ -1,18 +1,22 @@
-import mongoose, { model } from "mongoose";
-import Queries, { QueryKeys, SearchKeys } from "../../utils/Queries";
-import { conversation_model } from "./conversation_model";
-import { service_model } from "../Service/service_model";
-import { IAuth } from "../Auth/auth_types";
 import bcrypt from "bcrypt";
-import Aggregator from "../../utils/Aggregator";
-import { IConversation } from "./conversation_types";
+import mongoose from "mongoose";
+import Queries, { QueryKeys, SearchKeys } from "../../utils/Queries";
+import { IAuth } from "../Auth/auth_types";
+import { service_model } from "../Service/service_model";
+import { conversation_model } from "./conversation_model";
 
 async function create(data: any) {
-  const result = await conversation_model.create(data);
+  const is_exist_conversion = await conversation_model.findOne(data)
+  if (is_exist_conversion) {
+    return {
+      success: true,
+      message: "conversation created successfully",
+    };
+  }
+  await conversation_model.create(data);
   return {
     success: true,
     message: "conversation created successfully",
-    data: result,
   };
 }
 

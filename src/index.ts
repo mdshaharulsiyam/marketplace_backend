@@ -1,6 +1,4 @@
-import cluster from "cluster";
 import express, { NextFunction, Request, Response } from "express";
-import os from "os";
 import path from "path";
 import { payment_controller } from "./apis/Payment/payment_controller";
 import { connectToDB } from "./db";
@@ -52,7 +50,7 @@ app.all("*", (req: Request, res: Response, next: NextFunction) => {
 });
 function main() {
   try {
-    server.listen(Number(config?.PORT), config?.IP, async () => {
+    server.listen(Number(config?.PORT), async () => {
       logger.info("server is running");
       await connectToDB();
       logger.info(

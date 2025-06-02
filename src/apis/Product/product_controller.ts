@@ -137,16 +137,18 @@ const approve_product = async function (req: Request, res: Response) {
 const update_status = async function (req: Request, res: Response) {
   const { status } = req.body;
   const { role, _id } = req.user as IAuth;
-  if (role != "ADMIN" && role != "SUPER_ADMIN" && status == "APPROVED") {
-    throw new Error(`only admin can approve this product`);
+  // if (role != "ADMIN" && role != "SUPER_ADMIN" && status == "ACTIVE") {
+  //   throw new Error(`only admin can approve this product`);
+  // }
+  // if (role != "ADMIN" && role != "SUPER_ADMIN" && status == "REJECTED") {
+  //   throw new Error(`only admin can reject this product`);
+  // }
+  const query = { _id: req.params.id } as any;
+  if (role != "ADMIN" && role != "SUPER_ADMIN") {
+    query.user = _id?.toString() as string
   }
-  if (role != "ADMIN" && role != "SUPER_ADMIN" && status == "REJECTED") {
-    throw new Error(`only admin can reject this product`);
-  }
-
   const result = await product_service.update_status(
-    req?.params?.id,
-    _id?.toString() as string,
+    query,
     status,
   );
 
