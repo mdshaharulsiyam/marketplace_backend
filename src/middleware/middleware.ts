@@ -30,7 +30,7 @@ const middleware = (app: Express) => {
       //     console.log(config?.ALLOWED_ORIGIN,origin)
       //     config?.ALLOWED_ORIGIN?.includes(origin || "") ? callback(null, true) : callback(new Error('origin not allowed'))
       // },
-      origin: [...config?.ALLOWED_ORIGIN, "http://3.138.222.235:4173", "http://10.0.60.25:3000", "http://localhost:3000", "http://10.0.60.189:3000"],
+      origin: [...config?.ALLOWED_ORIGIN, "http://3.138.222.235:4173/", "http://3.138.222.235:4173", "http://10.0.60.25:3000", "http://localhost:3000", "http://10.0.60.189:3000"],
       optionsSuccessStatus: 200,
       credentials: true,
     }),
