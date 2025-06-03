@@ -1,12 +1,17 @@
-import { SearchKeys } from "./../../utils/Queries";
 import { Request, Response } from "express";
-import { conversation_service } from "./conversation_service";
-import { sendResponse } from "../../utils/sendResponse";
 import { HttpStatus } from "../../DefaultConfig/config";
+import { sendResponse } from "../../utils/sendResponse";
 import { IAuth } from "../Auth/auth_types";
-import { IConversation } from "./conversation_types";
+import { SearchKeys } from "./../../utils/Queries";
+import { conversation_service } from "./conversation_service";
 
 async function create(req: Request, res: Response) {
+  if (req.body.user?.toString() == req.user?._id?.toString()) {
+    return sendResponse(res, HttpStatus.BAD_REQUEST, {
+      message: "You can't create conversation with yourself",
+      success: false,
+    })
+  }
   const data = [req.body.user, req.user?._id];
   const result = await conversation_service.create({ users: data });
   sendResponse(res, HttpStatus.CREATED, result);
