@@ -83,7 +83,8 @@ auth_router
     verifyToken(config.ADMIN),
     asyncWrapper(auth_controller.get_all),
   )
-  .get("/auth/details/:id", asyncWrapper(auth_controller.get_details));
+  .get("/auth/details/:id", asyncWrapper(auth_controller.get_details))
+  .delete("/auth/delete", verifyToken(config.USER), asyncWrapper(auth_controller.delete_account));
 // , undefined, undefined, async (req: Request) => {
 //   const [category, banner] = await Promise.all([
 //     category_model.find(),

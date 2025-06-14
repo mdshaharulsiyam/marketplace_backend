@@ -29,11 +29,13 @@ async function create(req: Request, res: Response) {
 }
 
 async function success(req: Request, res: Response) {
-  res.render("success_payment");
+  // res.render("success_payment");
+  res.status(200).send({ success: true, message: "payment success" });
 }
 
 async function cancel(req: Request, res: Response) {
-  res.render("cancel_payment");
+  // res.render("cancel_payment");
+  res.status(200).send({ success: false, message: "payment cancel" });
 }
 
 async function success_account(req: Request, res: Response) {

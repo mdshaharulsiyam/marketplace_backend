@@ -123,7 +123,10 @@ async function get_details(req: Request, res: Response) {
   const result = await auth_service.get_details(id);
   sendResponse(res, HttpStatus.SUCCESS, result);
 }
-
+const delete_account = async (req: Request, res: Response) => {
+  const result = await auth_service.delete_account(req?.user?._id as string);
+  sendResponse(res, HttpStatus.SUCCESS, result);
+}
 export const auth_controller = Object.freeze({
   create,
   sing_in,
@@ -136,4 +139,5 @@ export const auth_controller = Object.freeze({
   verify_identity,
   get_all,
   get_details,
+  delete_account
 });
