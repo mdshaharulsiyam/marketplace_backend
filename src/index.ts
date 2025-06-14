@@ -30,7 +30,7 @@ app.post(
 );
 
 app.get("/subscription/show", (req: Request, res: Response) => {
-  res.status(200).send({ success: true, show: true });
+  res.status(200).send({ success: true, show: false });
 })
 
 app.set("views", path.join(__dirname, "views"));
