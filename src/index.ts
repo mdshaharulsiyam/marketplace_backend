@@ -29,6 +29,10 @@ app.post(
   asyncWrapper(payment_controller.webhook),
 );
 
+app.get("/subscription/show", (req: Request, res: Response) => {
+  res.status(200).send({ success: true, show: true });
+})
+
 app.set("views", path.join(__dirname, "views"));
 app.set("view engine", "ejs");
 
