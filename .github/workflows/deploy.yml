@@ -70,7 +70,8 @@ jobs:
           # Set the environment variables (using the ENV_VARS_JSON secret)
           ssh $EC2_USER@$EC2_HOST "echo '$ENV_VARS_JSON' > ~/applications/backend/.env"
 
-          ssh $EC2_USER@$EC2_HOST "
-          cd ~/applications/backend &&
-          (pm2 describe backend > /dev/null && pm2 restart backend --update-env || pm2 start dist/index.js --name backend)
-          "
+          # Stop the existing PM2 process if it exists
+          ssh $EC2_USER@$EC2_HOST "pm2 delete backend || true"  # Ensures no errors if the process doesn't exist
+
+          # Start the backend application with PM2
+          ssh $EC2_USER@$EC2_HOST "cd ~/applications/backend && pm2 start dist/index.js --name backend --update-env --watch --force"
