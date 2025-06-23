@@ -1,9 +1,9 @@
 import express from "express";
-import asyncWrapper from "../../middleware/asyncWrapper";
-import { conversation_controller } from "./conversation_controller";
-import verifyToken from "../../middleware/verifyToken";
 import config from "../../DefaultConfig/config";
+import asyncWrapper from "../../middleware/asyncWrapper";
 import uploadFile from "../../middleware/fileUploader";
+import verifyToken from "../../middleware/verifyToken";
+import { conversation_controller } from "./conversation_controller";
 
 export const conversation_router = express.Router();
 
@@ -26,7 +26,11 @@ conversation_router
     uploadFile(),
     asyncWrapper(conversation_controller.update),
   )
-
+  .patch(
+    "/conversation/block/:id",
+    verifyToken(config.USER),
+    asyncWrapper(conversation_controller.block_user),
+  )
   .delete(
     "/conversation/delete/:id",
     verifyToken(config.ADMIN),
