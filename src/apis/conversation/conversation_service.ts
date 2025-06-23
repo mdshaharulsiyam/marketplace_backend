@@ -1,6 +1,7 @@
 import bcrypt from "bcrypt";
 import mongoose from "mongoose";
-import Queries, { QueryKeys, SearchKeys } from "../../utils/Queries";
+import Aggregator from '../../utils/Aggregator';
+import { QueryKeys, SearchKeys } from "../../utils/Queries";
 import { IAuth } from "../Auth/auth_types";
 import { service_model } from "../Service/service_model";
 import { conversation_model } from "./conversation_model";
@@ -23,18 +24,40 @@ async function create(data: any) {
 async function get_all(
   queryKeys: QueryKeys,
   searchKeys: SearchKeys,
-  populatePath?: any,
-  selectFields?: string | string[],
-  modelSelect?: string,
+  userId: string
 ) {
-  return await Queries(
+  return await Aggregator(
     conversation_model,
     queryKeys,
     searchKeys,
-    populatePath,
-    selectFields,
-    modelSelect,
-  );
+    [{
+      $lookup: {
+        from: "auths",
+        localField: "users",
+        foreignField: "_id",
+        as: "users",
+      },
+    },
+    {
+      $project: {
+        _id: 1,
+        users: {
+          name: 1,
+          email: 1,
+          img: 1,
+          _id: 1,
+        },
+        isBlocked: {
+          $cond: {
+            if: { $gt: [{ $size: "$blockedBy" }, 0] },
+            then: true,
+            else: false,
+          }
+        },
+        blockedBy: { $ifNull: [{ $arrayElemAt: [{ $ifNull: ["$blockedBy", []] }, 0] }, null] },
+      },
+    },
+    ]);
 }
 
 async function update(id: string, data: { [key: string]: string }) {
@@ -91,10 +114,30 @@ async function delete_conversation(
     await session.endSession();
   }
 }
+async function block_user(id: string, user: string) {
+  if (id == user) throw new Error("you can't block yourself");
+  const is_exists = await conversation_model.findOne({
+    _id: id,
+  }).lean();
+  if (!is_exists) throw new Error("conversation not found");
+  const is_blocked = is_exists?.blockedBy?.find((item) => item.toString() === user.toString());
+  await conversation_model.findByIdAndUpdate(
+    id,
+    is_blocked
+      ? { $pull: { blockedBy: user } }
+      : { $addToSet: { blockedBy: user } },
+    { new: true },
+  );
 
+  return {
+    success: true,
+    message: `user ${is_blocked ? "unblocked" : "blocked"} successfully`,
+  };
+}
 export const conversation_service = Object.freeze({
   create,
   get_all,
   update,
   delete_conversation,
+  block_user,
 });

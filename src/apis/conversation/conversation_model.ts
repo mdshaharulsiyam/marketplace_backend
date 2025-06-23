@@ -15,6 +15,10 @@ const conversation_schema = new Schema<IConversation>(
       },
       // unique: true,
     },
+    blockedBy: {
+      type: [Schema.Types.ObjectId],
+      ref: "auth",
+    },
   },
   { timestamps: true },
 );

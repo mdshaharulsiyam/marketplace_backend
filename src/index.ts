@@ -59,7 +59,7 @@ function main() {
       logger.info("server is running");
       await connectToDB();
       logger.info(
-        `Worker process ${process.pid} is running on port ${config.PORT}`,
+        `Worker process ${process.pid} is running on port http://${config.IP}:${config.PORT}`,
       );
 
       // Error handling for worker processes

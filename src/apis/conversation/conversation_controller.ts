@@ -28,16 +28,10 @@ async function get_all(req: Request, res: Response) {
   };
   queryKeys.users = { $in: [req.user?._id as string] };
 
-  const populatePath: string | string[] = "users";
-  const selectFields: string | string[] = "name email img _id";
-  const modelSelect: string = "";
-
   const result = await conversation_service.get_all(
     queryKeys,
     searchKeys,
-    populatePath,
-    selectFields,
-    modelSelect,
+    req.user?._id as string
   );
   sendResponse(res, HttpStatus.SUCCESS, result);
 }
@@ -64,10 +58,17 @@ async function delete_conversation(req: Request, res: Response) {
   );
   sendResponse(res, HttpStatus.SUCCESS, result);
 }
-
+const block_user = async (req: Request, res: Response) => {
+  const result = await conversation_service.block_user(
+    req?.params?.id,
+    req?.user?._id?.toString() as string,
+  );
+  sendResponse(res, HttpStatus.SUCCESS, result);
+}
 export const conversation_controller = {
   create,
   get_all,
   update,
   delete_conversation,
+  block_user,
 };

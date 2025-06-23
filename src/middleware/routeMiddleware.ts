@@ -14,6 +14,7 @@ import { overview_router } from "../apis/Overview/overview_route";
 import { package_router } from "../apis/package/package_route";
 import { payment_route } from "../apis/Payment/payment_route";
 import { product_router } from "../apis/Product/product_route";
+import { report_router } from '../apis/report/report_route';
 import { service_router } from "../apis/Service/service_route";
 import { setting_router } from "../apis/Setting/setting_router";
 import { subscription_router } from "../apis/subscription/subscription_route";
@@ -59,4 +60,5 @@ export const routeMiddleware = (app: Express) => {
   app.use(subscription_router);
   app.use(conversation_router);
   app.use(message_router);
+  app.use(report_router);
 };

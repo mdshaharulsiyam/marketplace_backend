@@ -45,7 +45,7 @@ async function sign_up(data: { [key: string]: string }, auth?: IAuth) {
   const subscription_data = {
     subscription_id: packages?._id,
     user: result?._id,
-    expires_in: date.setMonth(date.getMonth() + 3),
+    expires_in: date.setMonth(date.getMonth() + 6),
     active: true
   }
 
