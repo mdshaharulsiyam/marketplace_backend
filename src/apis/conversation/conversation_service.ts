@@ -1,6 +1,7 @@
 import bcrypt from "bcrypt";
 import mongoose from "mongoose";
-import Queries, { QueryKeys, SearchKeys } from "../../utils/Queries";
+import Aggregator from '../../utils/Aggregator';
+import { QueryKeys, SearchKeys } from "../../utils/Queries";
 import { IAuth } from "../Auth/auth_types";
 import { service_model } from "../Service/service_model";
 import { conversation_model } from "./conversation_model";
@@ -23,18 +24,40 @@ async function create(data: any) {
 async function get_all(
   queryKeys: QueryKeys,
   searchKeys: SearchKeys,
-  populatePath?: any,
-  selectFields?: string | string[],
-  modelSelect?: string,
+  userId: string
 ) {
-  return await Queries(
+  return await Aggregator(
     conversation_model,
     queryKeys,
     searchKeys,
-    populatePath,
-    selectFields,
-    modelSelect,
-  );
+    [{
+      $lookup: {
+        from: "auths",
+        localField: "users",
+        foreignField: "_id",
+        as: "users",
+      },
+    },
+    {
+      $project: {
+        _id: 1,
+        users: {
+          name: 1,
+          email: 1,
+          img: 1,
+          _id: 1,
+        },
+        isBlocked: {
+          $cond: {
+            if: { $gt: [{ $size: "$blockedBy" }, 0] },
+            then: true,
+            else: false,
+          }
+        },
+        blockedBy: 1,
+      },
+    },
+    ]);
 }
 
 async function update(id: string, data: { [key: string]: string }) {

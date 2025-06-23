@@ -28,16 +28,10 @@ async function get_all(req: Request, res: Response) {
   };
   queryKeys.users = { $in: [req.user?._id as string] };
 
-  const populatePath: string | string[] = "users";
-  const selectFields: string | string[] = "name email img _id";
-  const modelSelect: string = "";
-
   const result = await conversation_service.get_all(
     queryKeys,
     searchKeys,
-    populatePath,
-    selectFields,
-    modelSelect,
+    req.user?._id as string
   );
   sendResponse(res, HttpStatus.SUCCESS, result);
 }
