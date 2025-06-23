@@ -114,10 +114,26 @@ async function delete_conversation(
     await session.endSession();
   }
 }
+async function block_user(id: string, user: string) {
+  await conversation_model.findByIdAndUpdate(
+    id,
+    {
+      $set: {
+        blockedBy: { $addToSet: user },
+      },
+    },
+    { new: true },
+  );
 
+  return {
+    success: true,
+    message: "conversation blocked successfully",
+  };
+}
 export const conversation_service = Object.freeze({
   create,
   get_all,
   update,
   delete_conversation,
+  block_user,
 });
