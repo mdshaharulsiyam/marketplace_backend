@@ -49,7 +49,7 @@ const product_schema = new Schema<IProduct>(
     status: {
       type: String,
       enum: ["ARCHIVED", "ACTIVE", "SOLD", "PENDING", "REJECTED"],
-      default: "ACTIVE",
+      default: "PENDING",
     },
   },
   { timestamps: true },
