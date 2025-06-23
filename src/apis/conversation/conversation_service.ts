@@ -115,19 +115,22 @@ async function delete_conversation(
   }
 }
 async function block_user(id: string, user: string) {
+  const is_exists = await conversation_model.findOne({
+    _id: id,
+  }).lean();
+  if (!is_exists) throw new Error("conversation not found");
+  const is_blocked = is_exists?.blockedBy?.find((item) => item.toString() === user.toString());
   await conversation_model.findByIdAndUpdate(
     id,
-    {
-      $set: {
-        blockedBy: { $addToSet: user },
-      },
-    },
+    is_blocked
+      ? { $pull: { blockedBy: user } }
+      : { $addToSet: { blockedBy: user } },
     { new: true },
   );
 
   return {
     success: true,
-    message: "conversation blocked successfully",
+    message: `user ${is_blocked ? "unblocked" : "blocked"} successfully`,
   };
 }
 export const conversation_service = Object.freeze({
