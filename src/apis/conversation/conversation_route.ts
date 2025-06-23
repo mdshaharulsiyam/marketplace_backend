@@ -22,7 +22,7 @@ conversation_router
 
   .patch(
     "/conversation/update/:id",
-    verifyToken(config.ADMIN),
+    verifyToken(config.USER),
     uploadFile(),
     asyncWrapper(conversation_controller.update),
   )

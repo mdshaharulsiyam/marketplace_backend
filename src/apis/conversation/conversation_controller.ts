@@ -61,7 +61,7 @@ async function delete_conversation(req: Request, res: Response) {
 const block_user = async (req: Request, res: Response) => {
   const result = await conversation_service.block_user(
     req?.params?.id,
-    req?.user?._id as string,
+    req?.user?._id?.toString() as string,
   );
   sendResponse(res, HttpStatus.SUCCESS, result);
 }

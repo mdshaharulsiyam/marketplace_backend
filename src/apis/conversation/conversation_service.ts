@@ -115,6 +115,7 @@ async function delete_conversation(
   }
 }
 async function block_user(id: string, user: string) {
+  if (id == user) throw new Error("you can't block yourself");
   const is_exists = await conversation_model.findOne({
     _id: id,
   }).lean();
