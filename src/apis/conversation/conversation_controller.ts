@@ -58,10 +58,17 @@ async function delete_conversation(req: Request, res: Response) {
   );
   sendResponse(res, HttpStatus.SUCCESS, result);
 }
-
+const block_user = async (req: Request, res: Response) => {
+  const result = await conversation_service.block_user(
+    req?.params?.id,
+    req?.user?._id as string,
+  );
+  sendResponse(res, HttpStatus.SUCCESS, result);
+}
 export const conversation_controller = {
   create,
   get_all,
   update,
   delete_conversation,
+  block_user,
 };
