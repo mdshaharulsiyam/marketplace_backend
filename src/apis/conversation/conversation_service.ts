@@ -54,7 +54,7 @@ async function get_all(
             else: false,
           }
         },
-        blockedBy: 1,
+        blockedBy: { $ifNull: [{ $arrayElemAt: [{ $ifNull: ["$blockedBy", []] }, 0] }, null] },
       },
     },
     ]);
