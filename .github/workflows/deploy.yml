@@ -70,8 +70,8 @@ jobs:
           # Set the environment variables (using the ENV_VARS_JSON secret)
           ssh $EC2_USER@$EC2_HOST "echo '$ENV_VARS_JSON' > ~/applications/backend/.env"
 
-          # Stop the existing PM2 process if it exists
+          # Stop the existing tmux process if it exists
           ssh $EC2_USER@$EC2_HOST "tmux has-session -t backend 2>/dev/null && tmux kill-session -t backend || true"
 
-          # Start the backend application with PM2
+          # Start the backend application with tmux
           ssh $EC2_USER@$EC2_HOST "cd ~/applications/backend && tmux new-session -d -s backend 'node dist/index.js'"

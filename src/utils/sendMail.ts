@@ -130,6 +130,30 @@ class MailService {
     };
     return this.sendMail(mailOptions);
   }
+  async sendAccountDeleteMail(
+    receiver: string,
+    subject: string,
+    name: string
+  ) {
+    const mailOptions = {
+      from: config?.MAIL_EMAIL || "",
+      to: receiver,
+      subject: subject,
+      html: `
+        <div style="font-family: Arial, sans-serif; color: #333; line-height: 1.6; max-width: 600px; margin: 20px auto; border: 1px solid #e0e0e0; border-radius: 8px; padding: 20px; background-color: #f9f9f9;">
+          <h2 style="color: #4CAF50; text-align: center;">Account Deleted</h2>
+          <p>Dear ${name || "User"},</p>
+          <p>We are writing to confirm that your account has been successfully deleted.</p>
+          <p>We appreciate the time you spent with us. If you ever wish to come back, we would be happy to have you again.</p>
+          <p style="margin-top: 30px;">Best Regards,</p>
+          <p>The AfroFest Team</p>
+          <hr style="border: none; border-top: 1px solid #e0e0e0; margin: 20px 0;" />
+          <p style="font-size: 12px; text-align: center; color: #888;">If you have questions, contact <a href="mailto:support@afrofest.com" style="color: #4CAF50; text-decoration: none;">support@afrofest.com</a>.</p>
+        </div>
+      `,
+    };
+    return this.sendMail(mailOptions);
+  }
 }
 
 export const sendMail = {
@@ -142,6 +166,9 @@ export const sendMail = {
     new MailService(),
   ),
   sendPasswordChangeMail: new MailService().sendPasswordChangeMail.bind(
+    new MailService(),
+  ),
+  sendAccountDeleteMail: new MailService().sendAccountDeleteMail.bind(
     new MailService(),
   ),
 };

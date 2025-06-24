@@ -1,3 +1,4 @@
+import bcrypt from 'bcrypt';
 import { Request, Response } from "express";
 import config, { HttpStatus } from "../../DefaultConfig/config";
 import { QueryKeys, SearchKeys } from "../../utils/Aggregator";
@@ -124,7 +125,10 @@ async function get_details(req: Request, res: Response) {
   sendResponse(res, HttpStatus.SUCCESS, result);
 }
 const delete_account = async (req: Request, res: Response) => {
-  const result = await auth_service.delete_account(req?.user?._id as string);
+  const { password } = req.body
+  const is_match_pass = await bcrypt.compare(password, req?.user?.password as string);
+  if (!is_match_pass) throw new Error(`password doesn't match `);
+  const result = await auth_service.delete_account(req?.user?._id as string, req?.user?.email as string, req?.user?.name as string);
   sendResponse(res, HttpStatus.SUCCESS, result);
 }
 export const auth_controller = Object.freeze({

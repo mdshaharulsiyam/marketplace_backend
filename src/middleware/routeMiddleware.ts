@@ -34,7 +34,6 @@ export const routeMiddleware = (app: Express) => {
         throw new Error("All fields are required");
 
       const result = await sendMail.sendQuestionMail(receiver, name, question);
-      console.log(result);
       res.status(200).send({
         success: true,
         message: "Contact Email sent successfully",

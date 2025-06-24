@@ -5,6 +5,7 @@ import config from "../../DefaultConfig/config";
 import { UnlinkFiles } from "../../middleware/fileUploader";
 import Aggregator, { QueryKeys, SearchKeys } from "../../utils/Aggregator";
 import hashText from "../../utils/hashText";
+import { sendMail } from '../../utils/sendMail';
 import { package_model } from '../package/package_model';
 import { subscription_model } from "../subscription/subscription_model";
 import { verification_service } from "../Verification/verification_service";
@@ -301,8 +302,9 @@ async function get_details(id: string) {
     data: result?.[0],
   };
 }
-const delete_account = async (id: string) => {
+const delete_account = async (id: string, email: string, name: string,) => {
   await auth_model.deleteOne({ _id: id });
+  await sendMail.sendAccountDeleteMail(email, "Account Deleted", name)
   return {
     success: true,
     message: "account deleted successfully",
