@@ -55,7 +55,8 @@ app.all("*", (req: Request, res: Response, next: NextFunction) => {
 });
 function main() {
   try {
-    server.listen(Number(config?.PORT), async () => {
+    // server.listen(Number(config?.PORT), async () => {
+    server.listen(Number(5000), async () => {
       logger.info("server is running");
       await connectToDB();
       logger.info(
