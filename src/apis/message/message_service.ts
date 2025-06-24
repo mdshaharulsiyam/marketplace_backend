@@ -1,19 +1,21 @@
-import mongoose, { model } from "mongoose";
-import Queries, { QueryKeys, SearchKeys } from "../../utils/Queries";
-import { message_model } from "./message_model";
-import { service_model } from "../Service/service_model";
-import { IAuth } from "../Auth/auth_types";
 import bcrypt from "bcrypt";
-import Aggregator from "../../utils/Aggregator";
+import mongoose from "mongoose";
 import { io } from "../../socket";
+import Aggregator from "../../utils/Aggregator";
+import { QueryKeys, SearchKeys } from "../../utils/Queries";
+import { IAuth } from "../Auth/auth_types";
 import { conversation_model } from "../conversation/conversation_model";
+import { service_model } from "../Service/service_model";
+import { message_model } from "./message_model";
 
 async function create(data: { [key: string]: string }) {
   const [result, conversation] = await Promise.all([
     message_model.create(data),
-    conversation_model.findById(data?.conversation_id),
+    conversation_model.findById(data?.conversation_id) as any,
   ]);
-
+  if (conversation?.blockedBy?.length > 0) {
+    throw new Error("conversation blocked");
+  }
   setImmediate(() => {
     const receiver_id = conversation?.users?.filter(
       (user: any) => user !== data?.sender,
