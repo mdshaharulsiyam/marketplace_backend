@@ -7,11 +7,12 @@ import { service_model } from "../Service/service_model";
 import { conversation_model } from "./conversation_model";
 
 async function create(data: any) {
-  const is_exist_conversion = await conversation_model.findOne(data)
+  const is_exist_conversion = await conversation_model.findOne(data).lean()
   if (is_exist_conversion) {
     return {
       success: true,
       message: "conversation created successfully",
+      result: is_exist_conversion,
     };
   }
   const result = await conversation_model.create(data);
