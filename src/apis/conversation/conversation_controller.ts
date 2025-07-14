@@ -31,7 +31,6 @@ async function get_all(req: Request, res: Response) {
   const result = await conversation_service.get_all(
     queryKeys,
     searchKeys,
-    req.user?._id as string
   );
   sendResponse(res, HttpStatus.SUCCESS, result);
 }

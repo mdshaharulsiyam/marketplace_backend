@@ -5,6 +5,7 @@ import Aggregator from "../../utils/Aggregator";
 import { QueryKeys, SearchKeys } from "../../utils/Queries";
 import { IAuth } from "../Auth/auth_types";
 import { conversation_model } from "../conversation/conversation_model";
+import { conversation_service } from '../conversation/conversation_service';
 import { service_model } from "../Service/service_model";
 import { message_model } from "./message_model";
 
@@ -41,11 +42,19 @@ async function create(data: { [key: string]: string }) {
 async function get_all(
   queryKeys: QueryKeys,
   searchKeys: SearchKeys,
-  populatePath?: any,
-  selectFields?: string | string[],
-  modelSelect?: string,
+
 ) {
-  return await Aggregator(message_model, queryKeys, searchKeys, []);
+  const [data, conversation] = await Promise.all([
+    Aggregator(message_model, queryKeys, searchKeys, []),
+    conversation_service.get_all({ _id: queryKeys.conversation_id }, {}),
+  ])
+
+  return {
+    success: true,
+    message: "messages fetched successfully",
+    data,
+    conversation,
+  };
 }
 
 async function update(id: string, data: { [key: string]: string }) {

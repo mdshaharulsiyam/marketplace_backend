@@ -43,9 +43,6 @@ async function get_all(req: Request, res: Response) {
   const result = await message_service.get_all(
     queryKeys,
     searchKeys,
-    populatePath,
-    selectFields,
-    modelSelect,
   );
   sendResponse(res, HttpStatus.SUCCESS, result);
 }

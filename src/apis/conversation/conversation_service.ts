@@ -26,7 +26,6 @@ async function create(data: any) {
 async function get_all(
   queryKeys: QueryKeys,
   searchKeys: SearchKeys,
-  userId: string
 ) {
   return await Aggregator(
     conversation_model,
