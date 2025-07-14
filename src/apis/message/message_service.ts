@@ -44,16 +44,14 @@ async function get_all(
   searchKeys: SearchKeys,
 
 ) {
-  const [data, conversation] = await Promise.all([
+  const [data, conversation]: [any, any] = await Promise.all([
     Aggregator(message_model, queryKeys, searchKeys, []),
     conversation_service.get_all({ _id: queryKeys.conversation_id }, {}),
   ])
 
   return {
-    success: true,
-    message: "messages fetched successfully",
-    data,
-    conversation,
+    conversation: conversation?.data?.[0],
+    ...data,
   };
 }
 
