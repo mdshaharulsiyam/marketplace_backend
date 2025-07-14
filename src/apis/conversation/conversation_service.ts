@@ -18,7 +18,7 @@ async function create(data: any) {
   return {
     success: true,
     message: "conversation created successfully",
-    conversation_id: result?._id,
+    result,
   };
 }
 
