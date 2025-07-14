@@ -48,7 +48,6 @@ async function get_all(
     Aggregator(message_model, queryKeys, searchKeys, []),
     conversation_service.get_all({ _id: queryKeys.conversation_id }, {}),
   ])
-
   return {
     conversation: conversation?.data?.[0],
     ...data,
