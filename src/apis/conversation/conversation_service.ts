@@ -14,10 +14,11 @@ async function create(data: any) {
       message: "conversation created successfully",
     };
   }
-  await conversation_model.create(data);
+  const result = await conversation_model.create(data);
   return {
     success: true,
     message: "conversation created successfully",
+    conversation_id: result?._id,
   };
 }
 
