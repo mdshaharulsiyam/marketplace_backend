@@ -394,8 +394,8 @@ const update_product = async (id: string, user: string, body: IProduct) => {
     {
       $set: {
         ...body,
-        // status: "PENDING"
-        status: "ACTIVE",
+        status: "PENDING"
+        // status: "ACTIVE",
       },
     },
     { new: true },
