@@ -2,6 +2,7 @@ import mongoose from "mongoose";
 import { UnlinkFiles } from "../../middleware/fileUploader";
 import Aggregator from "../../utils/Aggregator";
 import { QueryKeys, SearchKeys } from "../../utils/Queries";
+import { notification_service } from '../Notifications/notification_service';
 import { subscription_model } from "./../subscription/subscription_model";
 import { product_model } from "./product_model";
 import IProduct from "./product_type";
@@ -431,6 +432,14 @@ const approve_product = async (id: string) => {
     },
     { new: true },
   );
+
+  await notification_service.create({
+    user: result?.user as any,
+    message: `Your product ${result?.name} is approved by admin`,
+    title: "Product Approved",
+    read_by_admin: false,
+    read_by_user: false,
+  });
 
   return {
     success: true,
