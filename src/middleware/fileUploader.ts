@@ -1,7 +1,7 @@
+import { NextFunction, Request, Response } from "express";
+import fs from "fs";
 import multer, { StorageEngine } from "multer";
 import path from "path";
-import { Request, Response, NextFunction } from "express";
-import fs from "fs";
 
 export const UnlinkFiles = (files: string[]) => {
   files.forEach((filePath) => {
@@ -88,7 +88,7 @@ const uploadFile = () => {
     storage: storage,
     fileFilter: fileFilter,
   }).fields([
-    { name: "img", maxCount: 4 },
+    { name: "img", maxCount: 5 },
     { name: "video", maxCount: 1 },
     { name: "logo", maxCount: 1 },
     { name: "documents", maxCount: 2 },
@@ -98,6 +98,9 @@ const uploadFile = () => {
 
   return (req: Request, res: Response, next: NextFunction) => {
     upload(req, res, async function (err) {
+      if (err.code === 'LIMIT_UNEXPECTED_FILE') {
+        return res.status(400).send({ success: false, message: 'You can only upload up to 5 images.' });
+      }
       if (err) {
         return res.status(400).send({ success: false, message: err.message });
       }

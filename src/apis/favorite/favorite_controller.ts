@@ -4,13 +4,14 @@ import { QueryKeys } from "../../utils/Aggregator";
 import { sendResponse } from "../../utils/sendResponse";
 import { IAuth } from "../Auth/auth_types";
 import { SearchKeys } from "./../../utils/Queries";
+import { favorite_model } from './favorite_model';
 import { favorite_service } from "./favorite_service";
 
 const create = async (req: Request, res: Response) => {
-  const is_exist = req.extra?.is_exist?.length > 0;
+  const is_exist = await favorite_model.find({ product: req.params.product, user: req.user?._id });
   const result = await favorite_service.create(
     { product: req.params.product, user: req.user?._id },
-    is_exist,
+    is_exist?.length > 0,
   );
   sendResponse(res, HttpStatus.CREATED, result);
 };
