@@ -21,7 +21,16 @@ const create = async (body: IProduct) => {
   if (subscription?.expires_in < new Date())
     throw new Error(`your subscription is expired`);
 
-  await product_model.create(body);
+  await Promise.all([
+    product_model.create(body),
+    notification_service.create({
+      user: body?.user as any,
+      message: `Your product ${body?.name} is awaiting for approval`,
+      title: "Product added successfully",
+      read_by_admin: false,
+      read_by_user: false,
+    })
+  ]);
 
   return {
     success: true,
