@@ -4,7 +4,11 @@ const create_validate = z.object({
   body: z.object({
     name: z.string().min(1, { message: "Product Name is required" }),
     description: z.string().min(1, { message: "Description is required" }),
-    price: z.string({ required_error: "price is required" }),
+    price: z
+      .string({ required_error: "price is required" })
+      .refine((val) => !isNaN(Number(val)), {
+        message: "price must be a valid number",
+      }),
     img: z
       .array(z.string({ required_error: "image is required" }), {
         required_error: "image is required",
@@ -29,7 +33,11 @@ const update_validate = z.object({
       .string()
       .min(1, { message: "Description is required" })
       .optional(),
-    price: z.string({ required_error: "price is required" }).optional(),
+    price: z
+      .string({ required_error: "price is required" })
+      .refine((val) => !isNaN(Number(val)), {
+        message: "price must be a valid number",
+      }).optional(),
     img: z
       .union([
         z.string(),
