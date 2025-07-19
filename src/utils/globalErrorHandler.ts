@@ -107,18 +107,18 @@ const globalErrorHandler = (
   error.status = error.status || "error";
   // console.log("this a error  ", error);
   if (process.env.NODE_ENV === "development") {
-    if (error.name === "ZodError") error = handleZodError(error);
-    if (error.name === "CastError") error = handleCastError(error);
-    if (error.code === 11000)
+    if (error?.name === "ZodError") error = handleZodError(error);
+    if (error?.name === "CastError") error = handleCastError(error);
+    if (error?.code === 11000)
       error = handleDuplicateKeyError(error, model || "Resource");
-    if (error.name === "ValidationError") error = handleValidationError(error);
+    if (error?.name === "ValidationError") error = handleValidationError(error);
     handleDevError(res, error);
   } else if (process.env.NODE_ENV === "production") {
     if (error?.hasOwnProperty("ZodError")) error = handleZodError(error);
-    if (error.name === "CastError") error = handleCastError(error);
-    if (error.code === 11000)
+    if (error?.name === "CastError") error = handleCastError(error);
+    if (error?.code === 11000)
       error = handleDuplicateKeyError(error, model || "Resource");
-    if (error.name === "ValidationError") error = handleValidationError(error);
+    if (error?.name === "ValidationError") error = handleValidationError(error);
     handleProdError(res, error);
   }
 };
